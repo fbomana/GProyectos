@@ -45,4 +45,9 @@
 			</plugin>
 		</plugins>
 	</build>
+    <modules>
+        <module>GPCore</module>
+        <module>GPEar</module>
+        <module>GPWeb</module>
+    </modules>
 </project>
