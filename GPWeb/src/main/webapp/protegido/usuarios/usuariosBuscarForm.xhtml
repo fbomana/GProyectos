@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
+<ui:define name="head.title">#{msgUsuarios['formulario.title']}</ui:define>
+<ui:define name="content">
+    <h:outputStylesheet library="navegador/css" name="formulario.css"/>
+    <h2>Búsqueda de Usuarios</h2>
+    <h:form id="form">
+        <table>
+            <tbody>
+                <tr>
+                    <td><h:outputLabel for="login" value="#{msgUsuarios['formulario.login']}"/></td>
+                    <td><h:inputText id="login" value="#{usuariosBuscarBean.login}"/></td>
+                </tr>
+                
+                <tr>
+                    <td><h:outputLabel for="nombre" value="#{msgUsuarios['formulario.nombre']}"/></td>
+                    <td><h:inputText id="nombre" value="#{usuariosBuscarBean.nombre}"/></td>
+                </tr>
+
+                <tr>
+                    <td><h:outputLabel for="email" value="#{msgUsuarios['formulario.email']}"/></td>
+                    <td><h:inputText id="email" value="#{usuariosBuscarBean.email}"/></td>
+                </tr>
+
+                <tr>
+                    <td><h:outputLabel for="activo" value="#{msgUsuarios['formulario.activo']}"/></td>
+                    <td><h:selectBooleanCheckbox id="activo" value="#{usuariosBuscarBean.activo}"/></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <h:commandButton id="buscar" value="#{msgUsuarios['formulario.boton.buscar']}" label="Buscar" action="#{usuariosBuscarBean.buscar()}"/>
+                        <h:commandButton id="limpiar" value="#{msgUsuarios['formulario.boton.limpiar']}" label="Limpiar" action="#{usuariosBuscarBean.limpiar()}"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </h:form>
+</ui:define>
+</ui:composition>
+</html>
+

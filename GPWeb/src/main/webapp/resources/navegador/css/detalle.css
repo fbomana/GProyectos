@@ -1,0 +1,109 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16-feb-2015, 12:39:31
+    Author     : aitkiar
+*/
+
+table {
+    width:100%;
+}
+
+table.detalle tbody tr td {
+    margin:.3em;
+    padding-top: .1em;
+    padding-bottom: .1em;
+    padding-left: .3em;
+    text-align:left;
+}
+
+table.detalle tbody tr td:first-child {
+    font-weight:bold;
+    width:5%;
+    white-space: nowrap;
+}
+
+table.pestanias {
+    border-spacing: 0px;
+    border-collapse: collapse;    
+}
+
+table.pestanias thead tr th {
+    cursor:pointer;
+    font-weight:bold;
+    margin:0px;
+}
+
+table.pestanias thead tr th.head {
+    border-bottom:1px solid black;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    width:5%;
+}
+
+table.pestanias thead tr th.on {
+    border-bottom:none;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    width:5%;
+    padding: .2em .4em .2em .4em;
+}
+
+table.pestanias thead tr th.off {
+    border-bottom:1px solid black;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    width:5%;
+    padding: .2em .4em .2em .4em;
+}
+
+table.pestanias thead tr th.tail {
+    border-bottom:1px solid black;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    width:100%;
+}
+
+div.on {
+    display:block;
+}
+
+div.off {
+    display:none;
+}
+
+div.displayBox {
+    width:calc( 100% - .6em -2px );
+    height:6em;
+    overflow: auto; 
+    border:1px dotted grey;
+    padding:.3em;
+    border-radius:10px;
+}
+
+div.botonera {
+    width:100%;
+    text-align: right;
+    padding-top:.5em;
+}
+
+div.derecha {
+    float:right;
+}
+
+a.lupa {
+    text-decoration: none;
+    border: none;
+}
+
+img.lupa {
+    height:1em;
+    border:none;
+}

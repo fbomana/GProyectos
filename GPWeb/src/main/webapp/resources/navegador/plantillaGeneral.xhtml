@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <meta charset="UTF-8"/>
+        <title><ui:insert name="head.title"/></title>
+        <h:outputStylesheet library="navegador/css" name="layout.css"/>
+    </h:head>
+    <h:body>
+        <div id="layout-header">
+            <div class="cabecera-logo">GP</div>
+            <div class="cabecera-usuario">${ sessionScope.usuario.usuaNombre }</div>
+            <div class="cabecera-navegacion">
+            <c:forEach items="#{sessionScope.navegacion.getMenu()}" var="navegacion" varStatus="loop">
+                ${loop.index != 0 ? " > "  : ""}<h:link outcome="#{navegacion.url}" value="#{navegacion.texto}"/>
+            </c:forEach>
+            </div>
+        </div>
+        <div id="layout-container">
+            <div id="layout-menu">
+                <ul>
+                    <li>GENERAL</li>
+                    <li><h:link outcome="/protegido/documentacion/tiposDocumentacion/tiposDocumentacionLista.xhtml" value="#{msgDocumentacion['tiposDocumentacion.menu']}"/></li>
+                    <li><h:link outcome="/protegido/usuarios/usuariosBuscarForm.xhtml" value="#{msgUsuarios['menu']}"/></li>
+                    <li><h:link outcome="/protegido/proyectos/proyectosBuscarForm.xhtml" value="Proyectos"/></li>
+                </ul>
+            </div>
+            <div id="layout-content"><ui:insert name="content"/></div>
+        </div>
+    </h:body>
+</html>
+

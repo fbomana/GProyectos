@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
+            <ui:define name="head.title">#{msgProyectos['detalle.title']}</ui:define>
+            <ui:define name="content">
+                <h:form id="form">
+                <h:inputHidden id="proyId" value="#{proyectosDetalleBean.proyecto.proyId}"/>
+                <h:outputStylesheet library="navegador/css" name="detalle.css"/>
+                <h:outputScript library="navegador/js" name="pestanias.js"/>
+                <h2>#{proyectosDetalleBean.proyecto.proyNombre}</h2>
+                <div class="displayBox">
+                    <h:outputText value="#{proyectosDetalleBean.proyecto.proyDescripcion}" escape="false">
+                        <f:converter converterId="es.ait.gp.web.util.jsf.HTMLTextConverter"/>
+                    </h:outputText>
+                </div>
+                <br/>
+                <table class="detalle">
+                    <tbody>
+                        <tr>
+                            <td><h:outputText value="#{msgProyectos['detalle.id']}"/></td>
+                            <td><h:outputText value="#{proyectosDetalleBean.proyecto.proyId}"/></td>
+                        </tr>
+                        <tr>
+                            <td><h:outputText value="#{msgProyectos['detalle.padre']}"/></td>
+                            <td>
+                                <h:outputText value="${proyectosDetalleBean.proyecto.proyPadre.proyNombre}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h:outputText value="#{msgProyectos['detalle.fechaAlta']}"/></td>
+                            <td>
+                                <h:outputText value="${proyectosDetalleBean.proyecto.proyFxAlta}">
+                                    <f:convertDateTime dateStyle="long"/>
+                                </h:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h:outputText value="#{msgProyectos['detalle.fechaFin']}"/></td>
+                            <td>
+                                <h:outputText value="#{proyectosDetalleBean.proyecto.proyFxFin}">
+                                    <f:convertDateTime dateStyle="long"/>
+                                </h:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h:outputText value="#{msgProyectos['detalle.estado']}"/></td>
+                            <td><h:outputText value="#{proyectosDetalleBean.proyecto.proyEstado.esprEstado}"/></td>
+                        </tr>
+                        <tr>
+                            <td><h:outputText value="#{msgProyectos['detalle.usuarioAlta']}"/></td>
+                            <td><h:outputText value="${proyectosDetalleBean.proyecto.usuaIdAlta.usuaLogin}"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="botonera">
+                        <h:commandButton id="editar" value="#{msgProyectos['detalle.boton.editar']}" action="#{proyectosDetalleBean.editar()}"/> 
+                </div>
+                <table class="pestanias">
+                    <thead>
+                        <tr>
+                            <th class="head">&nbsp;</th>
+                            <th class="on" onclick="toggleTab(this)">#{msgProyectos['detalle.pestañas.subproyectos']}</th>
+                            <th class="off" onclick="toggleTab(this)">#{msgProyectos['detalle.pestañas.tareas']}</th>
+                            <th class="off" onclick="toggleTab(this)">#{msgProyectos['detalle.pestañas.historico']}</th>
+                            <th class="off" onclick="toggleTab(this)">#{msgProyectos['detalle.pestañas.documentacion']}</th>
+                            <th class="tail">&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div id="contenedor">
+                    <div class="on">
+                        <h:dataTable value="#{proyectosDetalleBean.subproyectos}" var="subproyecto" rendered="#{!proyectosDetalleBean.subproyectos.isEmpty()}">
+                            <h:column>
+                                    <h:commandLink action="#{proyectosDetalleBean.irSubproyecto( subproyecto.proyId)}">
+                                        <h:outputText value="#{subproyecto.proyNombre}"/><br/>
+                                    </h:commandLink>
+                                    <h:outputText value="#{subproyecto.proyDescripcion}" escape="false">
+                                        <f:converter converterId="es.ait.gp.web.util.jsf.TruncatedStringConverter"/>
+                                        <f:attribute name="truncatedLength" value="200"/>
+                                    </h:outputText>
+                            </h:column>
+                        </h:dataTable>
+                        <div class="botonera">
+                            <h:commandButton id="nuevoSubproyecto" value="#{msgProyectos['detalle.subproyectos.boton.nuevo']}" action="#{proyectosDetalleBean.nuevoSubproyecto()}"/>
+                        </div>
+                    </div>
+                    <div class="off">
+                        <h:dataTable value="#{proyectosDetalleBean.proyecto.tareas}" var="tarea" rendered="#{!proyectosDetalleBean.proyecto.tareas.isEmpty()}">
+                            <h:column>
+                                <h:commandLink action="#{proyectosDetalleBean.irTarea( tarea.tareId )}" disabled="#{!sessionScope.usuario.tienePermiso('TAREAS_CONSULTAR')}">
+                                    <h:outputText value="#{tarea.tareNombre}"/><br/>
+                                </h:commandLink>
+                                <h:outputText value="#{tarea.tareDescripcion}" escape="false">
+                                    <f:converter converterId="es.ait.gp.web.util.jsf.TruncatedStringConverter"/>
+                                    <f:attribute name="truncatedLength" value="200"/>
+                                </h:outputText>
+                            </h:column>
+                        </h:dataTable>
+                        <div class="botonera">
+                            <h:commandButton id="nuevaTarea" value="#{msgProyectos['detalle.tareas.boton.nuevo']}" action="#{proyectosDetalleBean.nuevaTarea()}" disabled="#{!sessionScope.usuario.tienePermiso( 'TAREAS_ALTA' )}"/>
+                        </div>
+                    </div>
+                    <div class="off">historico</div>
+                    <div class="off">
+                        <h:dataTable value="#{proyectosDetalleBean.proyecto.documentos}" var="documento" rendered="#{!proyectosDetalleBean.proyecto.documentos.isEmpty()}">
+                            <h:column>
+                                <h:outputText value="#{documento.documentacion.docuNombre}"/>
+                                <div class="derecha">
+                                    <h:commandLink action="#{proyectosDetalleBean.detalleDocumento( documento.documentacion.docuId )}" class="lupa">
+                                        <h:graphicImage library="navegador/img" name="document-preview.png" class="lupa"/>
+                                    </h:commandLink>
+                                </div>
+                                <br/>
+                                <h:outputText value="(#{documento.documentacion.tdocId.tdocNombre})"/>
+                            </h:column>
+                        </h:dataTable>
+                        <div class="botonera">
+                            <h:commandButton id="nuevoDocumento" value="#{msgProyectos['detalle.documentacion.boton.nuevo']}" action="#{proyectosDetalleBean.nuevoDocumento()}"/>
+                        </div>
+                    </div>
+                </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

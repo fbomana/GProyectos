@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title>Gestor de Proyectos - usuarios</title>
+</h:head>
+<h:body>
+<ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
+<ui:define name="head.title">Gestor de Proyectos - usuarios</ui:define>
+<ui:define name="content">
+    <h:outputStylesheet library="navegador/css" name="formulario.css"/>
+    <h2>Detalle de Usuario</h2>
+    <h:form id="form">
+        <h:inputHidden id="usuaId" value="#{usuariosDetalleBean.usuaId}"/>
+        <h:inputHidden id="filtro" value="#{usuariosDetalleBean.filtro}"/>
+        <table>
+            <tbody>
+                <tr>
+                    <td><h:outputLabel for="novale" value="id"/></td>
+                    <td><h:inputText id="novale" value="#{usuariosDetalleBean.usuario.usuaId}" readonly="true"/></td>
+                </tr>
+                
+                <tr>
+                    <td><h:outputLabel for="usuaLogin" value="Login"/></td>
+                    <td><h:inputText id="usuaLogin" value="#{usuariosDetalleBean.usuario.usuaLogin}" required="yes"/></td>
+                </tr>
+
+                <tr>
+                    <td><h:outputLabel for="usuaPassword" value="Password"/></td>
+                    <td><h:inputSecret id="usuaPassword" value="#{usuariosDetalleBean.usuario.usuaPassword}" redisplay="true" required="yes" valueChangeListener="#{usuariosDetalleBean.passwordCambiada}"/></td>
+                </tr>
+                
+                <tr>
+                    <td><h:outputLabel for="usuaNombre" value="Nombre"/></td>
+                    <td><h:inputText id="usuaNombre" value="#{usuariosDetalleBean.usuario.usuaNombre}" required="yes"/></td>
+                </tr>
+
+                <tr>
+                    <td><h:outputLabel for="usuaEmail" value="Email"/></td>
+                    <td><h:inputText id="usuaEmail" value="#{usuariosDetalleBean.usuario.usuaEmail}" required="yes"/></td>
+                </tr>
+
+                <tr>
+                    <td><h:outputLabel for="usuaActivo" value="activo"/></td>
+                    <td><h:selectBooleanCheckbox id="usuaActivo" value="#{usuariosDetalleBean.usuario.usuaActivo}"/></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <h:commandButton id="buscar" value="Guardar" label="Guardar" action="#{usuariosDetalleBean.guardar()}"/>
+                        <h:commandButton id="cancelar" value="Cancelar" label="Cancelar" action="#{usuariosDetalleBean.cancelar()}" immediate="true"/>
+                    </td>
+                </tr>
+            
+            </tbody>
+        </table>
+    </h:form>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>
+

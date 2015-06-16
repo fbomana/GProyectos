@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
+        <ui:define name="head.title">#{msgDocumentacion['tiposDocumentacion.lista.title']}</ui:define>
+        <ui:define name="content">
+            <h:outputStylesheet library="navegador/css" name="listado.css"/>
+            <h:form>
+                <h2><h:outputText value="#{msgDocumentacion['tiposDocumentacion.lista.cabecera']}"/></h2>
+                <h:dataTable var="tipo" value="#{tiposDocumentacionListaBean.getTipos()}" rendered="#{tiposDocumentacionListaBean.getTipos() != null and !tiposDocumentacionListaBean.getTipos().isEmpty()}">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#{msgDocumentacion['tiposDocumentacion.lista.tipo']}"/></f:facet>
+                        <h:outputText value="#{tipo.tdocNombre}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#{msgDocumentacion['tiposDocumentacion.lista.plantilla']}"/></f:facet>
+                        <h:commandLink id="descargar" action="#{tiposDocumentacionListaBean.descargar( tipo.tdocId )}">
+                            <h:graphicImage library="navegador/img" name="tick.png" rendered="#{tipo.tdocPlantilla != null}" class="tick"/>
+                        </h:commandLink>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#{msgDocumentacion['tiposDocumentacion.lista.enlace']}"/></f:facet>
+                        <h:commandButton action="#{tiposDocumentacionListaBean.editarTipo( tipo.tdocId )}" value="#{msgDocuimentacion['tiposDocumentacion.lista.boton.detalle']}"/>
+                    </h:column>
+                </h:dataTable>
+                <div class="botonera">
+                    <h:commandButton id="nuevoTipo" value="#{msgDocumentacion['tiposDocumentacion.lista.boton.nuevo']}" action="#{tiposDocumentacionListaBean.nuevoTipo()}"/>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

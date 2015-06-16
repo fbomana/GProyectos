@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>${msgGeneral['login.title']}</title>
+</h:head>
+<h:body>
+<h:form>
+<p>
+<table>
+    <tbody>
+        <tr>
+            <td>${msgGeneral['login.login']}</td>
+            <td>
+                <h:inputText id="usuaLogin" title="login" value="#{loginBean.usuaLogin}"></h:inputText>
+            </td>
+        </tr>
+        <tr>
+            <td>${msgGeneral['login.password']}</td>
+            <td>
+                <h:inputText id="usuaPassword" title="password" value="#{loginBean.usuaPassword}"></h:inputText>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><h:commandButton id="submit" value="${msgGeneral['login.login.button']}" action="${loginBean.login}"/></td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<h:message showSummary="true" showDetail="false"
+           style="color: #d20005;
+           font-family: 'New Century Schoolbook', serif; font-style: oblique; text-decoration: overline" id="errors1" for="submit"/>
+</h:form>
+</h:body>
+</html>
+

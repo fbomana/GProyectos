@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
+            <ui:define name="head.title">#{msgProyectos['detalle.title']}</ui:define>
+            <ui:define name="content">
+                <h:outputStylesheet library="navegador/css" name="formulario.css"/>
+                <h:form>
+                    <h2>Búsqueda de Proyectos</h2>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><h:outputLabel for="nombre" value="Nombre"/></td>
+                                <td><h:inputText id="nombre" value="#{proyectosBuscarBean.nombre}"/></td>
+                            </tr>
+                            <tr>
+                                <td><h:outputLabel for="descripcion" value="Descripcion"/></td>
+                                <td><h:inputText id="descripcion" value="#{proyectosBuscarBean.descripcion}"/></td>
+                            </tr>
+                            <tr>
+                                <td><h:outputLabel for="estado" value="Estado"/></td>
+                                <td>
+                                    <h:selectOneMenu id="estado" value="#{proyectosBuscarBean.estado}">
+                                        <f:selectItem itemValue="" itemLabel=""/>
+                                        <f:selectItems var="estado" value="#{proyectosBuscarBean.estados}" itemValue="#{estado}" 
+                                                       itemLabel="#{estado.esprEstado}" itemDescription="#{estado.esprDescripcion}"/>
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><h:outputLabel for="primerNivel" value="Primer nivel"/></td>
+                                <td><h:selectBooleanCheckbox id="primerNivel" value="#{proyectosBuscarBean.primerNivel}"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <h:commandButton id="buscar" value="Buscar" label="Buscar" action="#{proyectosBuscarBean.buscar()}" disabled="#{!sessionScope.usuario.tienePermiso( 'PROYECTOS_CONSULTAR' )}"/>
+                                    <h:commandButton id="limpiar" value="Limpiar" label="Limpiar" action="#{proyectosBuscarBean.limpiar()}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

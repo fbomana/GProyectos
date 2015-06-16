@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
+        <ui:define name="">#{msgDocumentacion['detalle.title']}</ui:define>
+        <ui:define name="content">
+            <h:outputStylesheet library="navegador/css" name="listado.css"/>
+            <h:form id="form">
+                <h:inputHidden id="docuId" value="#{documentacionDetalleBean.documentacion.docuId}"/>
+                <h2><h:outputText value="#{documentacionDetalleBean.documentacion.docuNombre}"/></h2>
+                <h:outputText value="#{documentacionDetalleBean.documentacion.tdocId.tdocNombre}"/><br/>
+                <h:outputText value="#{msgDocumentacion['detalle.versiones']}"/>
+                <h:dataTable var="version" value="#{documentacionDetalleBean.documentacion.getVersionesOrdenada()}">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{msgDocumentacion['detalle.fecha']}"/>
+                        </f:facet>
+                        <h:outputText value="#{version.versFxAlta}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{msgDocumentacion['detalle.fichero']}"/>
+                        </f:facet>
+                        <h:outputText value="#{version.versDocumentoNombre}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{msgDocumentacion['detalle.usuario']}"/>
+                        </f:facet>
+                        <h:outputText value="#{version.usuaIdVersion.usuaLogin}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{msgDocumentacion['detalle.descargar']}"/>
+                        </f:facet>
+                        <h:commandButton id="descargar" action="#{documentacionDetalleBean.descargarVersion( version.versId )}" value="#{msgDocumentacion['detalle.boton.descargar']}"/>
+                    </h:column>
+                </h:dataTable>
+                
+                <div class="botonera">
+                    <h:commandButton id="doEditar" value="#{msgDocumentacion['detalle.boton.editar']}" action="#{documentacionDetalleBean.editar()}"/>
+                    <h:commandButton id="cancelar" value="#{msgDocumentacion['detalle.boton.cancelar']}" action="#{documentacionDetalleBean.cancelar()}"/>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

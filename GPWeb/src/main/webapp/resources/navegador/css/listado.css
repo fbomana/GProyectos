@@ -1,0 +1,59 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22-ene-2015, 17:53:28
+    Author     : aitkiar
+*/
+
+table {
+    width:95%;
+    margin:auto;
+}
+
+table thead tr th {
+    text-align: center;
+    font-weight: bold;
+    background-color: cadetblue;
+    color: white;
+}
+
+table tbody tr td {
+    margin:.3em;
+    padding-top: .3em;
+    padding-bottom: .3em;
+    padding-left: .3em;
+    text-align:left;
+}
+
+table tbody tr:nth-child(odd) td {
+    background-color:lightcyan;
+}
+
+div.botonera {
+    width:95%;
+    margin:auto;
+    text-align: right;
+    padding-top:1em;
+}
+
+div.botonera input[type="submit"]
+{
+    width:10em;
+    margin-left:2em;
+}
+
+div.listaVacia {
+    width:95%;
+    margin:auto;
+    text-align: center;
+    padding-top:1em;
+    padding-bottom:1em;
+    background-color:lightcyan;
+}
+
+img.tick {
+    height: 1em;
+}

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
+            <ui:define name="head.title">#{msgGeneral['principal.title']}</ui:define>
+            <ui:define name="content">
+                <h:outputStylesheet library="navegador/css" name="home.css"/>
+                <h1>#{msgGeneral['principal.proyectos']}</h1>
+                <c:forEach items="#{homeUsuarioBean.proyectos}" var="proyecto">
+                    <div class="proyecto">
+                       <div class="tituloProyecto">
+                           #{proyecto.proyNombre}
+                           <div class="derecha">
+                               <h:link outcome="proyectos/proyectosDetalle" class="lupa">
+                                   <f:param name="proyId" value="#{proyecto.proyId}"/>
+                                   <h:graphicImage library="navegador/img" name="document-preview.png" class="lupa"/>
+                               </h:link>
+                           </div>
+                       </div>
+                        <h:outputText value="#{proyecto.proyDescripcion}" escape="false">
+                            <f:converter converterId="es.ait.gp.web.util.jsf.TruncatedStringConverter"/>
+                            <f:attribute name="truncatedLength" value="200"/>
+                        </h:outputText>
+                    </div>
+                </c:forEach>
+<!--                <h1>#{msgGeneral['principal.tareas']}</h1>
+                <h:dataTable value="#{tareas}" var="tarea">
+                    <h:column>
+                        <span class="tarea">#{tarea.tareNombre}</span><br/>
+                        <span class="descripcion">#{tarea.tareDescripcion}</span>
+                    </h:column>
+                </h:dataTable>
+-->
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

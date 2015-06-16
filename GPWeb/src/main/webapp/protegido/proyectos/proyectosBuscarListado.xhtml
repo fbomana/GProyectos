@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
+            <ui:define name="head.title">#{msgProyectos['listado.title']}</ui:define>
+            <ui:define name="content">
+                <h:outputStylesheet library="navegador/css" name="listado.css"/>
+                <h2>Búsqueda de Proyectos</h2>
+                <h:form id="form">
+                    <h:inputHidden id="filtro" value="#{proyectosBuscarBean.filtro}"/>
+                    <h:dataTable var="proyecto" value="#{proyectosBuscarBean.proyectos}" rendered="#{proyectosBuscarBean.proyectos != null and !proyectosBuscarBean.proyectos.isEmpty()}">
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="#{msgProyectos['listado.nombre']}"/></f:facet>
+                            <h:outputText value="#{proyecto.proyNombre}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="#{msgProyectos['listado.descripcion']}"/></f:facet>
+                            <h:outputText value="#{proyecto.proyDescripcion}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="#{msgProyectos['listado.estado']}"/></f:facet>
+                            <h:outputText value="#{proyecto.proyEstado}">
+                                <f:converter converterId="es.ait.gp.web.proyectos.EstadoProyectosConverter"/>
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="#{msgProyectos['listado.fechaAlta']}"/></f:facet>
+                            <h:outputText value="#{proyecto.proyFxAlta}">
+                                <f:convertDateTime for="proyFxAlta" pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="#{msgProyectos['listado.fechaFin']}"/></f:facet>
+                            <h:outputText value="#{proyecto.proyFxFin}">
+                                <f:convertDateTime for="proyFxAlta" pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="#{msgProyectos['listado.detalle']}"/></f:facet>
+                            <h:link outcome="proyectosDetalleForm" value="#{msgProyectos['listado.botonDetalle']}" rendered="#{sessionScope.usuario.tienePermiso( 'PROYECTOS_EDITAR' )}">
+                                <f:param name="proyId" value="#{proyecto.proyId}"/>
+                                <f:param name="filtro" value="#{proyectosBuscarBean.filtro}"/>
+                            </h:link>
+                        </h:column>
+                    </h:dataTable>
+                    <h:panelGroup layout="block" rendered="#{proyectosBuscarBean.proyectos == null  or proyectosBuscarBean.proyectos.isEmpty()}">
+                        <div class="listaVacia">
+                            <h:outputText value="No se encontraron proyectos"/>
+                        </div>
+                    </h:panelGroup>
+                    <div class="botonera">        
+                        <h:commandButton value="Nuevo Proyecto" action="proyectosDetalleForm" disabled="#{!sessionScope.usuario.tienePermiso( 'PROYECTOS_ALTA' )}"/>
+                        <h:commandButton value="Volver" action="proyectosBuscarForm" immediate="true"/>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

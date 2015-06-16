@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Gestor de Proyectos - usuarios</title>
+</h:head>
+<h:body>
+<ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
+<ui:define name="head.title">Gestor de Proyectos - usuarios</ui:define>
+<ui:define name="content">
+    <h:outputStylesheet library="navegador/css" name="listado.css"/>
+    <h2>Búsqueda de Usuarios</h2>
+    <h:form id="form">
+        <h:inputHidden id="filtro" value="#{usuariosBuscarBean.filtro}"/>
+        <h:dataTable value="#{usuariosBuscarBean.usuarios}" var="usuario" rendered="#{usuariosBuscarBean.usuarios != null  and !usuariosBuscarBean.usuarios.isEmpty()}">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Nombre" />
+                </f:facet>
+                <h:outputText value="#{usuario.usuaNombre}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Login" />
+                </f:facet>
+                <h:outputText value="#{usuario.usuaLogin}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Email" />
+                </f:facet>
+                <h:outputText value="#{usuario.usuaEmail}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Fecha de Alta" />
+                </f:facet>
+                <h:outputText value="#{usuario.usuaFxAlta}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Activo" />
+                </f:facet>
+                <h:outputText value='#{usuario.usuaActivo ? "Sí" : "No"}'/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Detalle" />
+                </f:facet>
+                <h:link outcome="usuariosDetalleForm" value="...">
+                    <f:param name="usuaId" value="#{usuario.usuaId}"/>
+                    <f:param name="filtro" value="#{usuariosBuscarBean.filtro}"/>
+                </h:link>
+            </h:column>
+        </h:dataTable>
+        <h:panelGroup layout="block" rendered="#{usuariosBuscarBean.usuarios == null  or usuariosBuscarBean.usuarios.isEmpty()}">
+            <div class="listaVacia">
+                <h:outputText value="No se encontraron usuarios"/>
+            </div>
+        </h:panelGroup>
+        <div class="botonera">        
+            <h:commandButton value="Nuevo Usuario" action="usuariosDetalleForm"/>
+            <h:commandButton value="Volver" action="usuariosBuscarForm" immediate="true"/>
+        </div>
+    </h:form>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>
+

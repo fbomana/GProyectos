@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
+            <ui:define name="head.title">#{msgProyectos['detalle.title']}</ui:define>
+            <ui:define name="content">
+                <h:outputStylesheet library="navegador/css" name="formulario.css"/>
+                <h2>#{msgProyectos['detalle.cabecera']}</h2>
+                <h:form id="form">
+                    <h:inputHidden id="filtro" value="#{proyectosFormBean.filtro}" immediate="true"/>
+                    <h:inputHidden id="vieneDe" value="#{proyectosFormBean.vieneDe}" immediate="true"/>
+                    <h:inputHidden id="accion" value="#{proyectosFormBean.accion}" immediate="true"/>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><h:outputLabel for="proyId" value="#{msgProyectos['detalle.id']}"/></td>
+                                <td><h:inputText id="proyId" value="#{proyectosFormBean.proyecto.proyId}" readonly="true"/></td>
+                            </tr>
+                            <tr>
+                                <td><h:outputLabel for="proyNombre" value="#{msgProyectos['detalle.nombre']}"/></td>
+                                <td><h:inputText id="proyNombre" value="#{proyectosFormBean.proyecto.proyNombre}"/></td>
+                            </tr>
+                            <tr>
+                                <td><h:outputLabel for="proyDescripcion" value="#{msgProyectos['detalle.descripcion']}"/></td>
+                                <td><h:inputTextarea id="proyDescripcion" value="#{proyectosFormBean.proyecto.proyDescripcion}"/></td>
+                            </tr>
+                            <tr>
+                                <td><h:outputLabel for="proyPadre" value="#{msgProyectos['detalle.padre']}"/></td>
+                                <td>
+                                    <h:inputHidden id="proyPadre" value="#{proyectosFormBean.proyecto.proyPadre}">
+                                        <f:converter converterId="es.ait.gp.web.proyectos.ProyectosConverter"/>
+                                    </h:inputHidden>
+                                    <h:outputText value="${proyectosFormBean.proyecto.proyPadre.proyNombre}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><h:outputLabel value="#{msgProyectos['detalle.fechaAlta']}"/></td>
+                                <td><h:outputText value="${proyectosFormBean.proyecto.proyFxAlta}"/></td>
+                            </tr>
+                            <tr>
+                                <td><h:outputLabel for="proyFxFin" value="#{msgProyectos['detalle.fechaFin']}"/></td>
+                                <td>
+                                    <h:inputText id="proyFxFin" value="#{proyectosFormBean.proyecto.proyFxFin}">
+                                        <f:convertDateTime for="proyFxFin" pattern="dd/MM/yyyy"/>
+                                    </h:inputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><h:outputLabel for="proyEstado" value="#{msgProyectos['detalle.estado']}"/></td>
+                                <td>
+                                    <h:selectOneMenu id="proyEstado" value="#{proyectosFormBean.proyecto.proyEstado}" >
+                                        <f:selectItems var="estado" value="#{proyectosFormBean.estados}" itemValue="#{estado}" 
+                                                       itemLabel="#{estado.esprEstado}" itemDescription="#{estado.esprDescripcion}"/>
+                                        <f:converter converterId="es.ait.gp.web.proyectos.EstadoProyectosConverter"/>
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><h:outputLabel for="usuaIdAlta" value="#{msgProyectos['detalle.usuarioAlta']}"/></td>
+                                <td><h:inputText id="usuaIdAlta" value="${proyectosFormBean.proyecto.usuaIdAlta.usuaLogin}" readonly="true"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <h:commandButton id="doGuardar" value="#{msgProyectos['detalle.boton.guardar']}" label="#{msgProyectos['detalle.boton.guardar']}" action="#{proyectosFormBean.guardar()}" disabled="#{!sessionScope.usuario.tienePermiso( 'PROYECTOS_EDITAR' )}"/>
+                                    <h:commandButton id="cancelar" value="#{msgProyectos['detalle.boton.cancelar']}" label="#{msgProyectos['detalle.boton.cancelar']}" action="#{proyectosFormBean.cancelar()}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h:messages/>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

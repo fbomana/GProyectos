@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
+        <ui:define name="">#{msgDocumentacion['detalle.title']}</ui:define>
+        <ui:define name="content">
+            <h:outputStylesheet library="navegador/css" name="formulario.css"/>
+            <h2>#{msgDocumentacion['detalle.cabecera']}</h2>
+            <h:form id="form" enctype="multipart/form-data">
+                <h:inputHidden id="proyId" value="#{documentacionFormBean.proyId}"/>
+                <h:inputHidden id="tareId" value="#{documentacionFormBean.tareId}"/>
+                <h:inputHidden id="docuId" value="#{documentacionFormBean.documentacion.docuId}"/>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><h:outputText value="#{msgDocumentacion['detalle.nombre']}"/></td>
+                        <td><h:inputText id="docuNombre" value="#{documentacionFormBean.documentacion.docuNombre}"/></td>
+                    </tr>
+                    <tr>
+                        <td><h:outputText value="#{msgDocumentacion['detalle.tipo']}"/></td>
+                        <td>
+                            <h:selectOneMenu id="tdocId" value="#{documentacionFormBean.documentacion.tdocId}" >
+                                <f:converter converterId="es.ait.gp.web.documentacion.TiposDocumentacionConverter" for="tdocId"/>
+                                <f:selectItems var="tipoDocumento" value="#{documentacionFormBean.getTiposDocumentacion()}" itemValue="#{tipoDocumento}" itemLabel="#{tipoDocumento.tdocNombre}" itemDescription="#{tipoDocumento.tdocDescripcion}" />
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr rendered="#{documentacionFormBean.documentacion.docuId == null}">
+                        <td><h:outputText value="#{msgDocumentacion['detalle.documento']}"/></td>
+                        <td>
+                            <h:inputFile id="documento" value="#{documentacionFormBean.part}" required="#{documentacionFormBean.documentacion.docuId == null}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <h:commandButton id="cancelar" value="#{msgDocumentacion['detalle.boton.cancelar']}" action="#{documentacionFormBean.cancelar()}" immediate="true"/>
+                            <h:commandButton id="doGuardar" value="#{msgDocumentacion['detalle.boton.guardar']}" action="#{documentacionFormBean.guardar()}"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

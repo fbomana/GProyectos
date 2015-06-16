@@ -1,0 +1,47 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22-ene-2015, 17:53:28
+    Author     : aitkiar
+*/
+
+table {
+    width:95%;
+    margin:auto;
+}
+
+table tr td:first-child {
+    width:15%;
+    font-weight: bold;
+    padding:0.5em;
+    border-bottom: dotted 1px black;
+}
+
+table tr td:nth-child {
+    width: 85%;
+    padding:0.5em;
+}
+
+table tr td input[type="text"] {
+    width:100%;
+}
+
+table tr td input[type="password"] {
+    width:100%;
+}
+
+table tr td textarea {
+    width:100%;
+}
+
+table tr td select {
+    width:100%;
+}
+
+table tr td input[type="submit"] {
+    width:10em;
+    margin-right:2em;
+}

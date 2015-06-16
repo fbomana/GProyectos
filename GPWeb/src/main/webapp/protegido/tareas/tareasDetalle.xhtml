@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
+        <ui:define name="head.title">#{msgTareas['detalle.title']}</ui:define>
+        <ui:define name="content">
+            <h:outputStylesheet library="navegador/css" name="detalle.css"/>
+            <h:outputScript library="navegador/js" name="pestanias.js"/>
+            <h:form id="form">
+                <h:inputHidden id="tareId" value="#{tareasDetalleBean.tarea.tareId}"/>
+                <h2><h:outputText value="#{tareasDetalleBean.tarea.tareNombre}"/></h2>
+                <div class="displayBox">
+                    <h:outputText value="#{tareasDetalleBean.tarea.tareDescripcion}" escape="false">
+                        <f:converter converterId="es.ait.gp.web.util.jsf.HTMLTextConverter"/>
+                    </h:outputText>
+                </div>
+                <div class="botonera">
+                    <h:commandButton id="doEditar" action="#{tareasDetalleBean.editar()}" value="#{msgTareas['detalle.boton.editar']}"/>
+                </div>
+                <table class="pestanias">
+                    <thead>
+                        <tr>
+                            <th class="head">&nbsp;</th>
+                            <th class="off" onclick="toggleTab(this)">#{msgTareas['detalle.pestañas.historico']}</th>
+                            <th class="on" onclick="toggleTab(this)">#{msgTareas['detalle.pestañas.documentacion']}</th>
+                            <th class="tail">&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div id="contenedor">
+                    <div class="off">historico</div>
+                    <div class="on">
+                        <h:dataTable value="#{tareasDetalleBean.tarea.documentos}" var="documento" rendered="#{!tareasDetalleBean.tarea.documentos.isEmpty()}">
+                            <h:column>
+                                <h:outputText value="#{documento.documentacion.docuNombre}"/>
+                                <div class="derecha">
+                                    <h:commandLink action="#{tareasDetalleBean.detalleDocumento( documento.documentacion.docuId )}" class="lupa">
+                                        <h:graphicImage library="navegador/img" name="document-preview.png" class="lupa"/>
+                                    </h:commandLink>
+                                </div>
+                                <br/>
+                                <h:outputText value="(#{documento.documentacion.tdocId.tdocNombre})"/>
+                            </h:column>
+                        </h:dataTable>
+                        <div class="botonera">
+                            <h:commandButton id="nuevoDocumento" value="#{msgTareas['detalle.documentacion.boton.nuevo']}" action="#{tareasDetalleBean.nuevoDocumento()}"/>
+                        </div>
+                    </div>
+                    
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+
