@@ -5,8 +5,6 @@
  */
 package es.ait.gp.core.criptografia;
 
-import java.security.Provider;
-import java.security.Security;
 import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

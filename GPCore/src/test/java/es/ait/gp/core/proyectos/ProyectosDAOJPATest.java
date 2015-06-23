@@ -5,7 +5,6 @@
  */
 package es.ait.gp.core.proyectos;
 
-import es.ait.gp.core.permisos.Roles;
 import es.ait.gp.core.usuarios.Usuarios;
 import es.ait.gp.core.usuarios.UsuariosDAO;
 import java.util.List;

@@ -17,6 +17,7 @@ import es.ait.gp.core.usuarios.UsuariosDAO;
 import es.ait.gp.web.util.PrimeraEjecucion;
 import java.lang.reflect.Field;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -27,14 +28,8 @@ import javax.servlet.ServletContextListener;
  */
 public class StartUpListener implements ServletContextListener
 {
-    @EJB
-    UsuariosDAO usuariosDao;
-    
-    @EJB
-    PermisosDAO permisosDao;
-    
-    @EJB
-    RolesDAO rolesDao;
+    @Inject
+    PrimeraEjecucion pe;
     
     @EJB
     EstadoProyectosDAO estadoProyectosDao;
@@ -45,12 +40,11 @@ public class StartUpListener implements ServletContextListener
     @Override
     public void contextInitialized(ServletContextEvent sce)
     {
-        PrimeraEjecucion pe = new PrimeraEjecucion();
         try
         {
             System.out.println("Configuración al inicio. Configurando BBDD");
             
-            pe.execute( usuariosDao, permisosDao, rolesDao );
+            pe.execute();
             System.out.println("Inicializando variables globales...");
             
             System.out.println("\tInicializando estados de proyecto");

@@ -9,9 +9,9 @@ import es.ait.gp.core.proyectos.EstadoProyectos;
 import es.ait.gp.core.proyectos.EstadoProyectosMap;
 import es.ait.gp.core.proyectos.Proyectos;
 import es.ait.gp.core.proyectos.ProyectosDAO;
+import es.ait.gp.core.proyectos.ProyectosGestorRemote;
 import es.ait.gp.core.usuarios.Usuarios;
 import es.ait.gp.web.util.RequestUtils;
-import es.ait.gp.web.util.ValidationUtils;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +41,9 @@ public class ProyectosFormBean
     
     @EJB
     ProyectosDAO dao;
+    
+    @EJB
+    ProyectosGestorRemote daoG;
     
     public ProyectosFormBean()
     {
@@ -192,18 +195,17 @@ public class ProyectosFormBean
         {
             proyecto = new Proyectos();
         }
+        Usuarios usuario = ( Usuarios )((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession( false )).getAttribute("usuario");        
         if ( proyecto.getProyId() == null )
         {
-
-            Usuarios usuario = ( Usuarios )((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession( false )).getAttribute("usuario");
             proyecto.setUsuaIdAlta( usuario );
             proyecto.setProyFxAlta( new Date( System.currentTimeMillis()));
-            dao.create( proyecto );
+            daoG.nuevoProyecto( proyecto, usuario );
             accion = "alta";
         }
         else
         {
-            dao.edit( proyecto );
+            daoG.modificarProyecto( proyecto, usuario );
             accion = "edicion";
         }
         if ( "detalle".equals( vieneDe ) )

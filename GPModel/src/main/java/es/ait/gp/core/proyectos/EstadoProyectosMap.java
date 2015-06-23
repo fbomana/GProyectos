@@ -5,6 +5,7 @@
  */
 package es.ait.gp.core.proyectos;
 
+import es.ait.gp.core.proyectos.EstadoProyectos;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

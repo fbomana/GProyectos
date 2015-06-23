@@ -5,6 +5,7 @@
  */
 package es.ait.gp.web.proyectos;
 
+import es.ait.gp.core.historico.HistoricoProyectosDAO;
 import es.ait.gp.core.proyectos.EstadoProyectos;
 import es.ait.gp.core.proyectos.EstadoProyectosMap;
 import es.ait.gp.core.proyectos.Proyectos;
@@ -12,10 +13,8 @@ import es.ait.gp.core.proyectos.ProyectosDAO;
 import es.ait.gp.core.proyectos.ProyectosFiltro;
 import es.ait.gp.core.tareas.Tareas;
 import es.ait.gp.core.tareas.TareasDAO;
-import es.ait.gp.core.usuarios.Usuarios;
 import es.ait.gp.web.util.RequestUtils;
 import es.ait.gp.web.util.navegacion.PilaNavegacionInterface;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -23,7 +22,6 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 
 /**
  * Bean que gestiona la pantalla de detalle de proyecto. Mantiene una variable 
@@ -44,10 +42,12 @@ public class ProyectosDetalleBean
     
     @EJB
     ProyectosDAO dao;
-    
-    
+        
     @EJB
     TareasDAO daoTareas;
+    
+    @EJB
+    HistoricoProyectosDAO daoHistorico;
     
     public ProyectosDetalleBean()
     {
@@ -76,7 +76,7 @@ public class ProyectosDetalleBean
                     proyecto = dao.find( new Integer( parametros.get("form:proyId")));
                 }
             }
-
+            buscarHistorico();
             buscarSubproyectos();
         }
         catch ( Exception e )
@@ -177,25 +177,25 @@ public class ProyectosDetalleBean
         this.tareas = tareas;
     }
 
-    public String guardar() throws Exception
-    {
-        if ( proyecto == null )
-        {
-            proyecto = new Proyectos();
-        }
-        if ( proyecto.getProyId() == null )
-        {
-            Usuarios usuario = ( Usuarios )((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession( false )).getAttribute("usuario");
-            proyecto.setUsuaIdAlta( usuario );
-            proyecto.setProyFxAlta( new Date( System.currentTimeMillis()));
-            dao.create( proyecto );
-        }
-        else
-        {
-            dao.edit( proyecto );
-        }
-        return "proyectosBuscarListado.xhtml";
-    }
+//    public String guardar() throws Exception
+//    {
+//        if ( proyecto == null )
+//        {
+//            proyecto = new Proyectos();
+//        }
+//        if ( proyecto.getProyId() == null )
+//        {
+//            Usuarios usuario = ( Usuarios )((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession( false )).getAttribute("usuario");
+//            proyecto.setUsuaIdAlta( usuario );
+//            proyecto.setProyFxAlta( new Date( System.currentTimeMillis()));
+//            dao.create( proyecto );
+//        }
+//        else
+//        {
+//            dao.edit( proyecto );
+//        }
+//        return "proyectosBuscarListado.xhtml";
+//    }
     
     public String cancelar() throws Exception
     {
@@ -237,6 +237,14 @@ public class ProyectosDetalleBean
             filtroTareas.setProyId( proyecto );
             
             setTareas(daoTareas.findByFilter( filtroTareas ));
+        }
+    }
+    
+    public void buscarHistorico() throws Exception
+    {
+        if ( proyecto != null )
+        {
+            proyecto.setHistorico( daoHistorico.find( proyecto ) );
         }
     }
     

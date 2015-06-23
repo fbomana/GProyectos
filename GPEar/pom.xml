@@ -44,6 +44,16 @@
                             <artifactId>GPWeb</artifactId>
                             <contextRoot>/GPWeb</contextRoot>
                         </webModule>
+                        <jarModule>>
+                            <groupId>es.ait.gestorProyectos</groupId>
+                            <artifactId>GPModel</artifactId>
+                            <includeInApplicationXml>true</includeInApplicationXml>
+                        </jarModule>
+                        <jarModule>>
+                            <groupId>es.ait.gestorProyectos</groupId>
+                            <artifactId>GPCoreRemote</artifactId>
+                            <includeInApplicationXml>true</includeInApplicationXml>
+                        </jarModule>
                     </modules>
                 </configuration>
             </plugin>

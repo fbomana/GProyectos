@@ -5,6 +5,9 @@
  */
 package es.ait.gp.web.util;
 
+import es.ait.gp.core.historico.AccionesHistorico;
+import es.ait.gp.core.historico.AccionesHistoricoDAO;
+import es.ait.gp.core.historico.ConstantesAccionesHistorico;
 import es.ait.gp.core.permisos.ConstantesPermisos;
 import es.ait.gp.core.permisos.Permisos;
 import es.ait.gp.core.permisos.PermisosDAO;
@@ -16,7 +19,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.NoResultException;
+import javax.ejb.EJB;
+import javax.inject.Named;
 
 /**
  * Clase que se tiene que ejecutar la primera vez que se arranque la aplicación 
@@ -26,9 +30,23 @@ import javax.persistence.NoResultException;
  *
  * @author aitkiar
  */
+@Named("PrimeraEjecución")
+@javax.enterprise.context.ApplicationScoped
 public class PrimeraEjecucion
 {
-    public void execute( UsuariosDAO usuariosDao, PermisosDAO permisosDao, RolesDAO rolesDao ) throws Exception
+    @EJB
+    UsuariosDAO usuariosDao;
+    
+    @EJB
+    PermisosDAO permisosDao;
+    
+    @EJB
+    RolesDAO rolesDao;
+    
+    @EJB
+    AccionesHistoricoDAO accionesHistoricoDao;
+    
+    public void execute() throws Exception
     {
         if ( usuariosDao.findByLogin("admin") == null )
         {
@@ -48,6 +66,7 @@ public class PrimeraEjecucion
             ejecutor.executeUpadate("insert into GENERATOR_TABLE values ( 'versiones', 0 )");
             ejecutor.executeUpadate("insert into GENERATOR_TABLE values ( 'permisos', 0 )");
             ejecutor.executeUpadate("insert into GENERATOR_TABLE values ( 'roles', 0 )");
+            ejecutor.executeUpadate("insert into GENERATOR_TABLE values ( 'historico_proyectos', 0 )");
             
             
             System.out.println("\tInsertando estado_proyectos");
@@ -64,36 +83,60 @@ public class PrimeraEjecucion
                 permiso.setPermDescripcion(campo.getName());
                 try
                 {
-                    permisosDao.findByName( campo.getName());
+                    if ( permisosDao.findByName( campo.getName() ) == null  )
+                    {
+                        permisosDao.create( permiso );
+                    }                            
                 }
                 catch( Exception e )
                 {
-                    permisosDao.create( permiso );
+                    e.printStackTrace();
                 }
             }
 
+            System.out.println("\tInsertando acciones de histórico");
+            campos = ConstantesAccionesHistorico.class.getDeclaredFields();
+            ConstantesAccionesHistorico constantes = new ConstantesAccionesHistorico();
+            for ( Field campo : campos )
+            {
+                
+                try
+                {
+                    if ( accionesHistoricoDao.find( ((AccionesHistorico)campo.get( constantes )).getAchiId() ) == null )
+                    {
+                        accionesHistoricoDao.create(((AccionesHistorico)campo.get( constantes )) );
+                    }
+                }
+                catch( Exception e )
+                {
+                    e.printStackTrace();
+                }
+            }
+            
             System.out.println("\tInsertando el role superadministrador.");
             Roles role = null;
             try
             {
                 role = rolesDao.findByName("Superadministrador"); 
+                if ( role == null )
+                {
+                    role = new Roles();
+                    role.setRoleDescripcion("Superadministrador");                    
+                }
+                role.setPermisosList( permisosDao.findAll());
+                if ( role.getRoleId() != null )
+                {
+                    rolesDao.edit( role );
+                }
+                else
+                {
+                    rolesDao.create( role );
+                }
             }
             catch ( Exception e )
             {
-                role = new Roles();
-                role.setRoleDescripcion("Superadministrador");
+                e.printStackTrace();
             }
-            
-            role.setPermisosList( permisosDao.findAll());
-            if ( role.getRoleId() != null )
-            {
-                rolesDao.edit( role );
-            }
-            else
-            {
-                rolesDao.create( role );
-            }
-
             
             System.out.println("[FIN]Actualizando tablas iniciales");
             

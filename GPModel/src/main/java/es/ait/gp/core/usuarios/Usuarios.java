@@ -6,6 +6,7 @@
 package es.ait.gp.core.usuarios;
 
 import es.ait.gp.core.documentacion.Versiones;
+import es.ait.gp.core.historico.HistoricoProyectos;
 import es.ait.gp.core.permisos.Permisos;
 import es.ait.gp.core.permisos.Roles;
 import es.ait.gp.core.tareas.Tareas;
@@ -55,6 +56,8 @@ import javax.xml.bind.annotation.XmlTransient;
 })
 public class Usuarios implements Serializable
 {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuaIdAccion")
+    private List<HistoricoProyectos> historicoProyectosList;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuaIdVersion")
     private List<Versiones> versionesList;
@@ -310,5 +313,16 @@ public class Usuarios implements Serializable
             }
         }
         return permisosEfectivos.containsKey( nombrePermiso );
+    }
+
+    @XmlTransient
+    public List<HistoricoProyectos> getHistoricoProyectosList()
+    {
+        return historicoProyectosList;
+    }
+
+    public void setHistoricoProyectosList(List<HistoricoProyectos> historicoProyectosList)
+    {
+        this.historicoProyectosList = historicoProyectosList;
     }
 }

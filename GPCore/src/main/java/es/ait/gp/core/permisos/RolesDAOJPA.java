@@ -83,7 +83,14 @@ public class RolesDAOJPA implements RolesDAO
     @Override
     public Roles findByName( String name) throws Exception
     {
-        return ( Roles ) em.createNamedQuery("Roles.findByRoleDescripcion").setParameter("roleDescripcion", name).getSingleResult();
+        try
+        {
+            return ( Roles ) em.createNamedQuery("Roles.findByRoleDescripcion").setParameter("roleDescripcion", name).getSingleResult();
+        }
+        catch ( javax.persistence.NoResultException e )
+        {
+            return null;
+        }
     }
     
     @Override

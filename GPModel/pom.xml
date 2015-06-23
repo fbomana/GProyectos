@@ -1,0 +1,14 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>es.ait.gestorProyectos</groupId>
+	<artifactId>GPModel</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	
+	<parent>
+		<groupId>es.ait.gestorProyectos</groupId>
+		<artifactId>gestor</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	
+</project> 

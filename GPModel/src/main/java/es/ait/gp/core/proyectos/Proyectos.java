@@ -6,6 +6,7 @@
 package es.ait.gp.core.proyectos;
 
 import es.ait.gp.core.documentacion.DocumentosProyectos;
+import es.ait.gp.core.historico.HistoricoProyectos;
 import es.ait.gp.core.tareas.Tareas;
 import es.ait.gp.core.usuarios.Usuarios;
 import java.io.Serializable;
@@ -51,7 +52,6 @@ import javax.xml.bind.annotation.XmlTransient;
 })
 public class Proyectos implements Serializable
 {
-
     private static final long serialVersionUID = 1L;
     
     @TableGenerator( name="Proyectos.generador",
@@ -98,6 +98,8 @@ public class Proyectos implements Serializable
     private List<Tareas> tareas;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "proyectos")
     private List<DocumentosProyectos> documentos;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proyId")
+    private List<HistoricoProyectos> historico;
 
     public Proyectos()
     {
@@ -258,6 +260,17 @@ public class Proyectos implements Serializable
     public void setDocumentos(List<DocumentosProyectos> documentos )
     {
         this.documentos = documentos;
+    }
+
+    @XmlTransient
+    public List<HistoricoProyectos> getHistorico()
+    {
+        return historico;
+    }
+
+    public void setHistorico(List<HistoricoProyectos> historico)
+    {
+        this.historico = historico;
     }
     
 }

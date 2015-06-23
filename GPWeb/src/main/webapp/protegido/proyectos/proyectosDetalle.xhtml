@@ -105,7 +105,23 @@
                             <h:commandButton id="nuevaTarea" value="#{msgProyectos['detalle.tareas.boton.nuevo']}" action="#{proyectosDetalleBean.nuevaTarea()}" disabled="#{!sessionScope.usuario.tienePermiso( 'TAREAS_ALTA' )}"/>
                         </div>
                     </div>
-                    <div class="off">historico</div>
+                    <div class="off">
+                        <h:dataTable value="#{proyectosDetalleBean.proyecto.historico}" var="historico" rendered="#{!proyectosDetalleBean.proyecto.historico.isEmpty()}">
+                            <h:column>
+                                <h:outputText value="#{historico.hiprFxAccion}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/>
+                                </h:outputText>
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{historico.hiprDescripcion}"/>
+                            </h:column>
+                            <h:column>
+                                <div class="derecha">
+                                    <h:outputText value="#{historico.usuaIdAccion.usuaLogin}"/>
+                                </div>                                
+                            </h:column>
+                        </h:dataTable>
+                    </div>
                     <div class="off">
                         <h:dataTable value="#{proyectosDetalleBean.proyecto.documentos}" var="documento" rendered="#{!proyectosDetalleBean.proyecto.documentos.isEmpty()}">
                             <h:column>

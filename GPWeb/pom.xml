@@ -22,5 +22,15 @@
                     <artifactId>commons-lang3</artifactId>
                     <version>3.4</version>
                 </dependency>
+	 <dependency>
+	  <groupId>${project.groupId}</groupId>
+	  <artifactId>GPCoreRemote</artifactId>
+	  <version>${project.version}</version>
+	 </dependency>
+	 <dependency>
+	  <groupId>${project.groupId}</groupId>
+	  <artifactId>GPModel</artifactId>
+	  <version>${project.version}</version>
+	 </dependency>
 	</dependencies>
 </project> 

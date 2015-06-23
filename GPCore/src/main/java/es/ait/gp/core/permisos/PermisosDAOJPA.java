@@ -60,7 +60,14 @@ public class PermisosDAOJPA implements PermisosDAO
     @Override
     public Permisos findByName(String name) throws Exception
     {
-        return ( Permisos )em.createNamedQuery("Permisos.findByPermNombre").setParameter("permNombre", name ).getSingleResult();
+        try
+        {
+            return ( Permisos )em.createNamedQuery("Permisos.findByPermNombre").setParameter("permNombre", name ).getSingleResult();
+        }
+        catch ( javax.persistence.NoResultException e )
+        {
+            return null;
+        }
     }
     
 }
