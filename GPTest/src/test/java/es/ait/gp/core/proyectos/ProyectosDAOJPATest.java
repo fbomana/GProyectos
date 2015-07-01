@@ -37,7 +37,7 @@ public class ProyectosDAOJPATest
         container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         try
         {
-            instance = (ProyectosDAO)container.getContext().lookup("java:global/classes/ProyectosDAOJPA");
+            instance = (ProyectosDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/ProyectosDAOJPA");
         }
         catch ( Exception e )
         {
@@ -70,7 +70,7 @@ public class ProyectosDAOJPATest
         
         try
         {
-            EstadoProyectosDAO dao = ( EstadoProyectosDAO )container.getContext().lookup("java:global/classes/EstadoProyectosDAOJPA");
+            EstadoProyectosDAO dao = ( EstadoProyectosDAO )container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/EstadoProyectosDAOJPA");
             proyecto.setProyEstado( dao.findAll().get( 0 ));
         }
         catch ( Exception e )
@@ -82,7 +82,7 @@ public class ProyectosDAOJPATest
         Usuarios usuario = null;
         try
         {
-            UsuariosDAO dao = (UsuariosDAO)container.getContext().lookup("java:global/classes/UsuariosDAOJPA");
+            UsuariosDAO dao = (UsuariosDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/UsuariosDAOJPA");
             usuario = dao.findByLogin( "admin" );
         }
         catch ( Exception e )

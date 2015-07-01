@@ -18,13 +18,13 @@ import static org.junit.Assert.*;
  *
  * @author aitkiar
  */
-public class PermisosDAOJPATest
+public class RolesDAOJPATest
 {
-    private static PermisosDAO instance;
+    private static RolesDAO instance;
     private static EJBContainer container;
     
     
-    public PermisosDAOJPATest()
+    public RolesDAOJPATest()
     {
     }
     
@@ -34,7 +34,7 @@ public class PermisosDAOJPATest
         container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         try
         {
-            instance = (PermisosDAO)container.getContext().lookup("java:global/classes/PermisosDAOJPA");
+            instance = (RolesDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/RolesDAOJPA");
         }
         catch ( Exception e )
         {
@@ -59,29 +59,28 @@ public class PermisosDAOJPATest
     }
 
     /**
-     * Test of create method, of class PermisosDAOJPA.
+     * Test of create method, of class RolesDAOJPA.
      */
     @Test
     public void testCRUD() throws Exception
     {
         System.out.println("create");
-        Permisos permiso = new Permisos();
-        permiso.setPermNombre("TEST_JPATEST");
-        permiso.setPermDescripcion("Permiso creado durante las pruebas de JPA");
-        instance.create(permiso);
+        Roles role = new Roles();
+        role.setRoleDescripcion("Role creado durante las pruebas de JPA");
+        instance.create(role);
 
         System.out.println("find");
-        instance.find(permiso.getPermId());
+        instance.find(role.getRoleId());
 
         System.out.println("edit");
-        permiso.setPermDescripcion("Descripcion modificada");
-        instance.edit(permiso);
+        role.setRoleDescripcion("Modificado");
+        instance.edit(role);
 
         System.out.println("findAll");
         List resultado = instance.findAll();
         assertFalse( resultado.isEmpty());
 
         System.out.println("remove");
-        instance.remove(permiso);
+        instance.remove(role);
     }    
 }

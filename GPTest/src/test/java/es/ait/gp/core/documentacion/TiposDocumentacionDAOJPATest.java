@@ -35,7 +35,7 @@ public class TiposDocumentacionDAOJPATest
         container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         try
         {
-            instance = (TiposDocumentacionDAO)container.getContext().lookup("java:global/classes/TiposDocumentacionDAOJPA");
+            instance = (TiposDocumentacionDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/TiposDocumentacionDAOJPA");
         }
         catch ( Exception e )
         {

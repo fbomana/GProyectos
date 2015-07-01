@@ -5,14 +5,14 @@
  */
 package es.ait.gp.core.usuarios;
 
-import java.util.Date;
+import java.net.URL;
+import java.util.Enumeration;
 import javax.ejb.embeddable.EJBContainer;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -30,10 +30,24 @@ public class UsuariosDAOJPATest
     @BeforeClass
     public static void setUpClass()
     {
+        try
+        {
+            System.out.println("--------------------------------------------------------------------");
+            Enumeration<URL> en = ClassLoader.getSystemResources("META-INF/persistence.xml");
+            while ( en.hasMoreElements())
+            {
+                System.out.println( en.nextElement().toString());
+            }
+            System.out.println("--------------------------------------------------------------------");
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
         container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         try
         {
-            instance = (UsuariosDAO)container.getContext().lookup("java:global/classes/UsuariosDAOJPA");
+            instance = (UsuariosDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/UsuariosDAOJPA");
         }
         catch ( Exception e )
         {

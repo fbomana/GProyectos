@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class VersionesDAOJPA implements VersionesDAO
 {
-    @PersistenceContext(name="GPCorePU")
+    @PersistenceContext(unitName = "GPCorePU")
     EntityManager em;
 
     @Override

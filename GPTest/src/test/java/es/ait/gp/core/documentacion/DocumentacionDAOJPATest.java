@@ -5,9 +5,6 @@
  */
 package es.ait.gp.core.documentacion;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 import javax.ejb.embeddable.EJBContainer;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -41,8 +38,9 @@ public class DocumentacionDAOJPATest
         container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         try
         {
-            instance = (DocumentacionDAO)container.getContext().lookup("java:global/classes/DocumentacionDAOJPA");
-            daoTipos = (TiposDocumentacionDAO)container.getContext().lookup("java:global/classes/TiposDocumentacionDAOJPA");
+            
+            instance = (DocumentacionDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/DocumentacionDAOJPA");
+            daoTipos = (TiposDocumentacionDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/TiposDocumentacionDAOJPA");
             tdocPrueba = new TiposDocumentacion( null, 
             "Tipo de prueba para el test de documentación", 
             "Tipo de prueba de para los test unitarios de Documentación. Se borra al terminar los test" );
@@ -51,6 +49,7 @@ public class DocumentacionDAOJPATest
         }
         catch ( Exception e )
         {
+            e.printStackTrace();
         }
     }
     

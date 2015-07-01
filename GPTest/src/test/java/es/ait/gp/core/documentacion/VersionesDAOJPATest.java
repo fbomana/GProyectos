@@ -47,10 +47,10 @@ public class VersionesDAOJPATest
         container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         try
         {
-            instance = (VersionesDAO)container.getContext().lookup("java:global/classes/VersionesDAOJPA");
-            daoTipos = (TiposDocumentacionDAO)container.getContext().lookup("java:global/classes/TiposDocumentacionDAOJPA");
-            daoDocumentacion = (DocumentacionDAO)container.getContext().lookup("java:global/classes/DocumentacionDAOJPA");
-            daoUsuarios = (UsuariosDAO)container.getContext().lookup("java:global/classes/UsuariosDAOJPA");
+            instance = (VersionesDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/VersionesDAOJPA");
+            daoTipos = (TiposDocumentacionDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/TiposDocumentacionDAOJPA");
+            daoDocumentacion = (DocumentacionDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/DocumentacionDAOJPA");
+            daoUsuarios = (UsuariosDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/UsuariosDAOJPA");
             
             tdocPrueba = new TiposDocumentacion( null, 
             "Tipo de prueba para el test de documentación", 

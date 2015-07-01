@@ -28,6 +28,8 @@ public class TareasDAOJPA implements TareasDAO
     public void create(Tareas tarea) throws Exception
     {
         em.persist( tarea );
+        
+        System.out.println( tarea.getProyId());
         tarea.getProyId().getTareas().add( tarea );
         em.merge( tarea.getProyId());
     }

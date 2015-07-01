@@ -63,5 +63,6 @@
         <module>GPEar</module>
         <module>GPModel</module>
         <module>GPWeb</module>
+        <module>GPTest</module>
     </modules>
 </project>
