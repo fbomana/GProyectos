@@ -47,7 +47,7 @@ public class UsuariosDAOJPATest
         container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         try
         {
-            instance = (UsuariosDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/UsuariosDAOJPA");
+            instance = (UsuariosDAO)container.getContext().lookup("java:global/classes/UsuariosDAOJPA");
         }
         catch ( Exception e )
         {

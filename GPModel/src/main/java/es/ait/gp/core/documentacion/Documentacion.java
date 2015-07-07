@@ -113,6 +113,10 @@ public class Documentacion implements Serializable
     @XmlTransient
     public List<Versiones> getVersiones()
     {
+        if ( versiones == null )
+        {
+            versiones = new ArrayList<Versiones>();
+        }
         return versiones;
     }
     

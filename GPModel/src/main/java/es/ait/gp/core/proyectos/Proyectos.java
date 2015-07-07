@@ -217,11 +217,7 @@ public class Proyectos implements Serializable
             return false;
         }
         Proyectos other = (Proyectos) object;
-        if ((this.proyId == null && other.proyId != null) || (this.proyId != null && !this.proyId.equals(other.proyId)))
-        {
-            return false;
-        }
-        return true;
+        return !((this.proyId == null && other.proyId != null) || (this.proyId != null && !this.proyId.equals(other.proyId)));
     }
 
     @Override

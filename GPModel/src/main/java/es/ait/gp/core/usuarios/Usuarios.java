@@ -7,12 +7,14 @@ package es.ait.gp.core.usuarios;
 
 import es.ait.gp.core.documentacion.Versiones;
 import es.ait.gp.core.historico.HistoricoProyectos;
+import es.ait.gp.core.historico.HistoricoTareas;
 import es.ait.gp.core.permisos.Permisos;
 import es.ait.gp.core.permisos.Roles;
 import es.ait.gp.core.tareas.Tareas;
 import es.ait.gp.core.tareas.UsuariosTareas;
 import es.ait.gp.core.proyectos.Proyectos;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +58,8 @@ import javax.xml.bind.annotation.XmlTransient;
 })
 public class Usuarios implements Serializable
 {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuaIdAccion")
+    private Collection<HistoricoTareas> historicoTareasCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuaIdAccion")
     private List<HistoricoProyectos> historicoProyectosList;
 
@@ -324,5 +328,16 @@ public class Usuarios implements Serializable
     public void setHistoricoProyectosList(List<HistoricoProyectos> historicoProyectosList)
     {
         this.historicoProyectosList = historicoProyectosList;
+    }
+
+    @XmlTransient
+    public Collection<HistoricoTareas> getHistoricoTareasCollection()
+    {
+        return historicoTareasCollection;
+    }
+
+    public void setHistoricoTareasCollection(Collection<HistoricoTareas> historicoTareasCollection)
+    {
+        this.historicoTareasCollection = historicoTareasCollection;
     }
 }

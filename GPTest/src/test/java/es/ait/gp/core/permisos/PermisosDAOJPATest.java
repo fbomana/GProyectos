@@ -34,7 +34,7 @@ public class PermisosDAOJPATest
         container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         try
         {
-            instance = (PermisosDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/PermisosDAOJPA");
+            instance = (PermisosDAO)container.getContext().lookup("java:global/classes/PermisosDAOJPA");
         }
         catch ( Exception e )
         {

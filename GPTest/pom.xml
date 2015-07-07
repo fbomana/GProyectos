@@ -35,34 +35,24 @@
                 <groupId>es.ait.gestorProyectos</groupId>
                 <artifactId>GPModel</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
-                <scope>test</scope>
+                <scope>compile</scope>
             </dependency>
             
             <dependency>
                 <groupId>es.ait.gestorProyectos</groupId>
                 <artifactId>GPCoreRemote</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
-                <scope>test</scope>
+                <scope>compile</scope>
             </dependency>
-            
-            <dependency>
-                <groupId>es.ait.gestorProyectos</groupId>
-                <artifactId>GPCore</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
-                <scope>test</scope>
-            </dependency>            
-            
 	</dependencies>
         
         <properties>
-            <GPTest.test.config>${basedir}/src/test/resources/META-INF/</GPTest.test.config>
-            <GPTest.real.config>${basedir}/src/main/resources/META-INF/</GPTest.real.config>
-            <GPTest.build.config>${project.build.outputDirectory}/META-INF/</GPTest.build.config>
-            <GPTest.build.test.config>${project.build.testOutputDirectory}/META-INF/</GPTest.build.test.config>
+            <GPCore.src>${basedir}/../GPCore/src/main/java</GPCore.src>
+            <GPTest.src>${basedir}/src/main/java</GPTest.src>
         </properties>
 	<build>
             <plugins>
-                <!--
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-ejb-plugin</artifactId>
@@ -71,7 +61,7 @@
                         <ejbVersion>3.2</ejbVersion>
                     </configuration>
                 </plugin>
-                -->
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
@@ -82,23 +72,22 @@
                     </configuration>
                 </plugin>
                 
-    <!-- Se necesitan distintos ficheros de recursos para los test que para el servidor
+    <!-- Se necesitan distintos ficheros de recursos para los test que para el servidor-->
                 <plugin>
                     <artifactId>maven-antrun-plugin</artifactId>
                     <version>1.3</version>
                     <executions>
                         <execution>
                             <id>copy-test-persistence</id>
-                            <phase>process-test-classes</phase>
+                            <phase>process-sources</phase>
                             <configuration>
                                 <tasks>
-                                    <echo>${GPTest.build.config}</echo>
-                                    <echo>${GPTest.test.config}</echo>
-                                    <echo>${GPTest.real.config}</echo>
+                                    <echo>${GPCore.src}</echo>
+                                    <echo>${GPTest.src}</echo>
 
-                                    <copy todir="${GPTest.build.config}" overwrite="true">
-                                        <fileset dir="${GPTest.test.config}">
-                                            <filename name="*.xml"/>
+                                    <copy todir="${GPTest.src}" overwrite="true">
+                                        <fileset dir="${GPCore.src}">
+                                            <filename name="**/*.java"/>
                                         </fileset>
                                     </copy>
                                 </tasks>
@@ -109,7 +98,6 @@
                         </execution>
                     </executions>
                 </plugin>
-                -->
             </plugins>
 	</build>
 	

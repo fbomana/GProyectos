@@ -42,15 +42,15 @@ public class TareasDAOJPATest
         container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         try
         {
-            instance = (TareasDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/TareasDAOJPA");
-            proyectosDao = (ProyectosDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/ProyectosDAOJPA");
+            instance = (TareasDAO)container.getContext().lookup("java:global/classes/TareasDAOJPA");
+            proyectosDao = (ProyectosDAO)container.getContext().lookup("java:global/classes/ProyectosDAOJPA");
             proyecto = new Proyectos();
             proyecto.setProyFxAlta( new java.util.Date());
             proyecto.setProyDescripcion("Proyecto creado durante las pruebas unitarias con JUNIT.");
 
             try
             {
-                EstadoProyectosDAO dao = ( EstadoProyectosDAO )container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/EstadoProyectosDAOJPA");
+                EstadoProyectosDAO dao = ( EstadoProyectosDAO )container.getContext().lookup("java:global/classes/EstadoProyectosDAOJPA");
                 proyecto.setProyEstado( dao.findAll().get( 0 ));
             }
             catch ( Exception e )
@@ -61,7 +61,7 @@ public class TareasDAOJPATest
             proyecto.setProyNombre("Proyecto de test");
             try
             {
-                UsuariosDAO dao = (UsuariosDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/UsuariosDAOJPA");
+                UsuariosDAO dao = (UsuariosDAO)container.getContext().lookup("java:global/classes/UsuariosDAOJPA");
                 usuario = dao.findByLogin( "admin" );
             }
             catch ( Exception e )
@@ -168,7 +168,7 @@ public class TareasDAOJPATest
 //        System.out.println("findByFilter");
 //        Tareas filtro = null;
 //        EJBContainer container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
-//        TareasDAO instance = (TareasDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/TareasDAOJPA");
+//        TareasDAO instance = (TareasDAO)container.getContext().lookup("java:global/classes/TareasDAOJPA");
 //        List<Tareas> expResult = null;
 //        List<Tareas> result = instance.findByFilter(filtro);
 //        assertEquals(expResult, result);

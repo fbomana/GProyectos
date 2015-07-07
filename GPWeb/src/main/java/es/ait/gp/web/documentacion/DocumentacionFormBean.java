@@ -7,6 +7,7 @@ package es.ait.gp.web.documentacion;
 
 import es.ait.gp.core.documentacion.Documentacion;
 import es.ait.gp.core.documentacion.DocumentacionDAO;
+import es.ait.gp.core.documentacion.DocumentacionGestorRemote;
 import es.ait.gp.core.documentacion.DocumentosProyectos;
 import es.ait.gp.core.documentacion.TiposDocumentacion;
 import es.ait.gp.core.documentacion.TiposDocumentacionMap;
@@ -43,6 +44,8 @@ public class DocumentacionFormBean
     private DocumentacionDAO dao;
     @EJB
     private VersionesDAO daoVersiones;
+    @EJB
+    private DocumentacionGestorRemote gestorDocumentacion;
     
     private Integer proyId;
     private Integer tareId;
@@ -183,26 +186,32 @@ public class DocumentacionFormBean
     
     public String guardar() throws Exception
     {
-        if ( proyId != null )
-        {
-            dao.guardarDocumentoProyecto( documentacion, proyId );
-        }
-        else if ( tareId != null )
-        {
-            dao.guardarDocumentoTarea( documentacion, tareId );
-        }
+        Usuarios usuario = (Usuarios)RequestUtils.getSessionAttribute("usuario");
+        Versiones version = null;
         if ( part != null )
         {
-            Versiones version = new Versiones();
-            version.setDocuId( documentacion );
-            version.setUsuaIdVersion( (Usuarios)RequestUtils.getSessionAttribute("usuario"));
+            version = new Versiones();
+            version.setUsuaIdVersion( usuario );
             version.setVersFxAlta( new Date());
             version.setVersDocumentoNombre( part.getSubmittedFileName());
             version.setVersDocumentoMime( part.getContentType());
             byte[] buffer = new byte[(int)part.getSize()];
             part.getInputStream().read(buffer);
             version.setVersDocumento( buffer );
-            daoVersiones.create(version);
+        }
+
+        if ( proyId != null )
+        {
+            gestorDocumentacion.guardarDocumentoProyecto( documentacion, version, proyId, usuario );
+        }
+        else if ( tareId != null )
+        {
+            dao.guardarDocumentoTarea( documentacion, tareId );
+            if ( version != null )
+            {
+                version.setDocuId( documentacion );
+                daoVersiones.create(version);
+            }
         }
         return cancelar();
     }

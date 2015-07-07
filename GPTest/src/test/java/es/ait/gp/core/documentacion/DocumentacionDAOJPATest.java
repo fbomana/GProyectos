@@ -39,8 +39,8 @@ public class DocumentacionDAOJPATest
         try
         {
             
-            instance = (DocumentacionDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/DocumentacionDAOJPA");
-            daoTipos = (TiposDocumentacionDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/TiposDocumentacionDAOJPA");
+            instance = (DocumentacionDAO)container.getContext().lookup("java:global/classes/DocumentacionDAOJPA");
+            daoTipos = (TiposDocumentacionDAO)container.getContext().lookup("java:global/classes/TiposDocumentacionDAOJPA");
             tdocPrueba = new TiposDocumentacion( null, 
             "Tipo de prueba para el test de documentación", 
             "Tipo de prueba de para los test unitarios de Documentación. Se borra al terminar los test" );

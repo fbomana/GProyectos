@@ -6,6 +6,7 @@
 package es.ait.gp.core.historico;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -49,6 +50,8 @@ public class AccionesHistorico implements Serializable
     private String achiDescripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "achiId")
     private List<HistoricoProyectos> historicoProyectosList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "achiId")
+    private List<HistoricoTareas> historicoTareasCollection;
 
     public AccionesHistorico()
     {
@@ -124,6 +127,17 @@ public class AccionesHistorico implements Serializable
     public String toString()
     {
         return "es.ait.gp.core.historico.AccionesHistorico[ achiId=" + achiId + " ]";
+    }
+
+    @XmlTransient
+    public List<HistoricoTareas> getHistoricoTareasCollection()
+    {
+        return historicoTareasCollection;
+    }
+
+    public void setHistoricoTareasCollection(List<HistoricoTareas> historicoTareasCollection)
+    {
+        this.historicoTareasCollection = historicoTareasCollection;
     }
     
 }

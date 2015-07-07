@@ -99,6 +99,17 @@ public class HistoricoProyectos implements Serializable
     {
     }
 
+    public HistoricoProyectos( Proyectos proyecto, Usuarios usuario )
+    {
+        this.proyId = proyecto;
+        this.usuaIdAccion = usuario;
+        this.proyDescripcionNew = proyecto.getProyDescripcion();
+        this.proyEstadoNew = proyecto.getProyEstado().getEsprEstado();
+        this.proyNombreNew = proyecto.getProyNombre();
+        this.proyFxFinNew = proyecto.getProyFxFin();
+        this.proyPadreNew = proyecto.getProyPadre() != null ? proyecto.getProyPadre().getProyId() : null;
+    }
+    
     public HistoricoProyectos(Integer hiprId)
     {
         this.hiprId = hiprId;

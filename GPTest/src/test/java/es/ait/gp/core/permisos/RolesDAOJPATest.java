@@ -34,7 +34,7 @@ public class RolesDAOJPATest
         container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         try
         {
-            instance = (RolesDAO)container.getContext().lookup("java:global/GPCore-1.0.0-SNAPSHOT/RolesDAOJPA");
+            instance = (RolesDAO)container.getContext().lookup("java:global/classes/RolesDAOJPA");
         }
         catch ( Exception e )
         {

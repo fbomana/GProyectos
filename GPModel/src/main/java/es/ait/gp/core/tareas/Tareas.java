@@ -6,9 +6,11 @@
 package es.ait.gp.core.tareas;
 
 import es.ait.gp.core.documentacion.DocumentosTareas;
+import es.ait.gp.core.historico.HistoricoTareas;
 import es.ait.gp.core.proyectos.Proyectos;
 import es.ait.gp.core.usuarios.Usuarios;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -45,6 +47,8 @@ import javax.xml.bind.annotation.XmlTransient;
 })
 public class Tareas implements Serializable
 {   
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tareId")
+    private Collection<HistoricoTareas> historicoTareasCollection;
     private static final long serialVersionUID = 1L;
     
     @TableGenerator( name="Tareas.generador", table="GENERATOR_TABLE",
@@ -193,6 +197,17 @@ public class Tareas implements Serializable
     public void setDocumentos(List<DocumentosTareas> documentos)
     {
         this.documentos = documentos;
+    }
+
+    @XmlTransient
+    public Collection<HistoricoTareas> getHistoricoTareasCollection()
+    {
+        return historicoTareasCollection;
+    }
+
+    public void setHistoricoTareasCollection(Collection<HistoricoTareas> historicoTareasCollection)
+    {
+        this.historicoTareasCollection = historicoTareasCollection;
     }
     
 }
