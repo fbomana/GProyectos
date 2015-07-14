@@ -1,5 +1,6 @@
 delete from GENERATOR_TABLE;
 delete from historico_proyectos;
+delete from historico_tareas;
 delete from acciones_historico;
 delete from tareas;
 delete from proyectos;

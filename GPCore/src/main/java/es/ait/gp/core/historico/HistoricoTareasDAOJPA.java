@@ -18,13 +18,16 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class HistoricoTareasDAOJPA implements HistoricoTareasDAO
 {
-    @PersistenceContext(unitName = "GPCore")
+    @PersistenceContext(unitName = "GPCorePU")
     EntityManager em;
             
     @Override
     public void create( HistoricoTareas historico ) throws Exception
     {
         em.persist( historico );
+        Tareas tarea = em.find( Tareas.class, historico.getTareId().getTareId());
+        tarea.getHistorico().add( historico );
+        em.merge( tarea );
     }
 
     @Override
@@ -36,7 +39,7 @@ public class HistoricoTareasDAOJPA implements HistoricoTareasDAO
     @Override
     public List<HistoricoTareas> find( Tareas tarea ) throws Exception
     {
-        return em.createQuery( "select h.* from HistoricoTareas h where h.tare_id.tare_id = :tareId ").setParameter( "tareId", tarea.getTareId()).getResultList();
+        return em.createQuery( "select h from HistoricoTareas h where h.tareId.tareId = :tareId order by h.hitrFxAccion desc, h.hitrId desc").setParameter( "tareId", tarea.getTareId()).getResultList();
     }
     
 }

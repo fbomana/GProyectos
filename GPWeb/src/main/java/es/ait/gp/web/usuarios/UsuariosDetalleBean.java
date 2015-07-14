@@ -156,7 +156,7 @@ public class UsuariosDetalleBean
             {
                 usuario.setUsuaId(usuaId);
                 usuario.setUsuaPassword( CodificarCadenas.codificar(usuario.getUsuaPassword(),
-                    usuario.getUsuaFxAlta().getTime() + ""));
+                    ( usuario.getUsuaFxAlta().getTime() / 1000 ) * 1000 + ""));
             }
             dao.edit( usuario );
         }

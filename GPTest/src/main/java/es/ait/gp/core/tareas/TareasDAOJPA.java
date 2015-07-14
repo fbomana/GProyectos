@@ -30,8 +30,8 @@ public class TareasDAOJPA implements TareasDAO
         em.persist( tarea );
         
         System.out.println( tarea.getProyId());
-        tarea.getProyId().getTareas().add( tarea );
-        em.merge( tarea.getProyId());
+//        tarea.getProyId().getTareas().add( tarea );
+//        em.merge( tarea.getProyId());
     }
 
     @Override

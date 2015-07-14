@@ -8,9 +8,9 @@ package es.ait.gp.web.tareas;
 import es.ait.gp.core.proyectos.ProyectosDAO;
 import es.ait.gp.core.tareas.Tareas;
 import es.ait.gp.core.tareas.TareasDAO;
+import es.ait.gp.core.tareas.TareasGestorRemote;
 import es.ait.gp.core.usuarios.Usuarios;
 import es.ait.gp.web.util.RequestUtils;
-import es.ait.gp.web.util.ValidationUtils;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -35,6 +35,9 @@ public class TareasFormBean
     
     @EJB
     ProyectosDAO daoProyectos;
+    
+    @EJB
+    TareasGestorRemote gestor;
     
     public TareasFormBean()
     {
@@ -141,6 +144,8 @@ public class TareasFormBean
     public String guardar() throws Exception
     {
         Tareas tarea;
+        
+        Usuarios usuario = ( Usuarios ) RequestUtils.getSessionAttribute("usuario");
         if ( tareId == null )
         {
             tarea = new Tareas();
@@ -148,15 +153,14 @@ public class TareasFormBean
             tarea.setTareDescripcion( tareDescripcion );
             tarea.setUsuaIdAlta( (Usuarios) RequestUtils.getSessionAttribute( "usuario"));
             tarea.setProyId( daoProyectos.find( new Integer( proyId )));
-            ValidationUtils.printValidationErrors( tarea );
-            dao.create( tarea );
+            tarea = gestor.nuevaTarea( tarea, usuario );
         }
         else
         {
             tarea = dao.find( tareId ); 
             tarea.setTareNombre(tareNombre);
             tarea.setTareDescripcion(tareDescripcion);
-            dao.edit( tarea );
+            gestor.modificarTarea( tarea, usuario );
         }
         return "tareasDetalle.xhtml?faces-redirect=true&tareId=" + tarea.getTareId();
     }

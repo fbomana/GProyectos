@@ -28,7 +28,7 @@ public class ProyectosGestor implements ProyectosGestorRemote
     
             
     @Override
-    public void nuevoProyecto(Proyectos proyecto, Usuarios usuario) throws Exception
+    public Proyectos nuevoProyecto(Proyectos proyecto, Usuarios usuario) throws Exception
     {
         HistoricoProyectos historico = new HistoricoProyectos();
         historico.setAchiId( ConstantesAccionesHistorico.PROYECTOS_NUEVO);
@@ -44,6 +44,7 @@ public class ProyectosGestor implements ProyectosGestorRemote
         dao.create( proyecto );
         historico.setProyId( proyecto );
         daoHistorico.create( historico );
+        return proyecto;
     }
 
     @Override

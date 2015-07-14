@@ -5,6 +5,7 @@
  */
 package es.ait.gp.core.tareas;
 
+import es.ait.gp.core.proyectos.Proyectos;
 import es.ait.gp.core.usuarios.Usuarios;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,9 @@ public class TareasDAOJPA implements TareasDAO
         em.persist( tarea );
         
         System.out.println( tarea.getProyId());
-        tarea.getProyId().getTareas().add( tarea );
-        em.merge( tarea.getProyId());
+        Proyectos proyecto = em.find( Proyectos.class, tarea.getProyId().getProyId());
+        proyecto.getTareas().add( tarea );
+        em.merge( proyecto );
     }
 
     @Override

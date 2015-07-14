@@ -200,7 +200,7 @@ public class ProyectosFormBean
         {
             proyecto.setUsuaIdAlta( usuario );
             proyecto.setProyFxAlta( new Date( System.currentTimeMillis()));
-            daoG.nuevoProyecto( proyecto, usuario );
+            proyecto = daoG.nuevoProyecto( proyecto, usuario );
             accion = "alta";
         }
         else

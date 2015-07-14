@@ -8,7 +8,6 @@ package es.ait.gp.web.documentacion;
 import es.ait.gp.core.documentacion.Documentacion;
 import es.ait.gp.core.documentacion.DocumentacionDAO;
 import es.ait.gp.core.documentacion.DocumentacionGestorRemote;
-import es.ait.gp.core.documentacion.DocumentosProyectos;
 import es.ait.gp.core.documentacion.TiposDocumentacion;
 import es.ait.gp.core.documentacion.TiposDocumentacionMap;
 import es.ait.gp.core.documentacion.Versiones;
@@ -46,6 +45,7 @@ public class DocumentacionFormBean
     private VersionesDAO daoVersiones;
     @EJB
     private DocumentacionGestorRemote gestorDocumentacion;
+    
     
     private Integer proyId;
     private Integer tareId;
@@ -206,12 +206,7 @@ public class DocumentacionFormBean
         }
         else if ( tareId != null )
         {
-            dao.guardarDocumentoTarea( documentacion, tareId );
-            if ( version != null )
-            {
-                version.setDocuId( documentacion );
-                daoVersiones.create(version);
-            }
+            gestorDocumentacion.guardarDocumentoTarea(documentacion, version, tareId, usuario);
         }
         return cancelar();
     }

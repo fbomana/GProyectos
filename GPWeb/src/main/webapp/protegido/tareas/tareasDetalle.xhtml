@@ -31,7 +31,21 @@
                     </thead>
                 </table>
                 <div id="contenedor">
-                    <div class="off">historico</div>
+                    <div class="off">
+                        <h:dataTable value="#{tareasDetalleBean.tarea.historico}" var="historico">
+                            <h:column>
+                                <h:outputText value="#{historico.hitrFxAccion}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/>
+                                </h:outputText>
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{historico.hitrDescripcion}"/>
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{historico.usuaIdAccion.usuaLogin}"/>
+                            </h:column>
+                        </h:dataTable>
+                    </div>
                     <div class="on">
                         <h:dataTable value="#{tareasDetalleBean.tarea.documentos}" var="documento" rendered="#{!tareasDetalleBean.tarea.documentos.isEmpty()}">
                             <h:column>

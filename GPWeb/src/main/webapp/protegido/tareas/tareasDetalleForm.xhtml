@@ -21,7 +21,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <h:commandButton id="doGuardar" value="#{msgTareas['detalle.boton.guardar']}" label="#{msgTareas['detalle.boton.guardar']}" action="#{tareasFormBean.guardar()}" disabled="#{sessionScope.usuario.tienePermiso('TAREAS_EDITAR')}"/>
+                        <h:commandButton id="doGuardar" value="#{msgTareas['detalle.boton.guardar']}" label="#{msgTareas['detalle.boton.guardar']}" action="#{tareasFormBean.guardar()}" disabled="#{!sessionScope.usuario.tienePermiso('TAREAS_EDITAR')}"/>
                         <h:commandButton id="cancelar" value="#{msgTareas['detalle.boton.cancelar']}" label="#{msgTareas['detalle.boton.cancelar']}" action="#{tareasFormBean.cancelar()}"/>
                     </td>
                 </tr>

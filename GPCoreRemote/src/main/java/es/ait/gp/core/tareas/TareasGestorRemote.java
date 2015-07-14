@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.ait.gp.core.proyectos;
+package es.ait.gp.core.tareas;
 
 import es.ait.gp.core.usuarios.Usuarios;
 import javax.ejb.Remote;
@@ -13,9 +13,8 @@ import javax.ejb.Remote;
  * @author aitkiar
  */
 @Remote
-public interface ProyectosGestorRemote
+public interface TareasGestorRemote
 {
-    public Proyectos nuevoProyecto( Proyectos proyecto, Usuarios usuario ) throws Exception;
-    public void modificarProyecto( Proyectos proyecto, Usuarios usuario ) throws Exception;
-
+    public Tareas nuevaTarea( Tareas tarea, Usuarios usuario ) throws Exception;
+    public void modificarTarea( Tareas tarea, Usuarios usuario ) throws Exception;
 }

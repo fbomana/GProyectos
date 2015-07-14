@@ -5,7 +5,7 @@
  */
 package es.ait.gp.web.tareas;
 
-import es.ait.gp.core.proyectos.Proyectos;
+import es.ait.gp.core.historico.HistoricoTareasDAO;
 import es.ait.gp.core.tareas.Tareas;
 import es.ait.gp.core.tareas.TareasDAO;
 import es.ait.gp.web.util.RequestUtils;
@@ -27,6 +27,9 @@ public class TareasDetalleBean
     
     @EJB
     TareasDAO dao;
+    
+    @EJB
+    HistoricoTareasDAO daoHistorico;
 
     public TareasDetalleBean()
     {
@@ -51,10 +54,19 @@ public class TareasDetalleBean
             {
                 setTarea(new Tareas());
             }
+            buscarHistorico();
         }
         catch ( Exception e )
         {
             e.printStackTrace();
+        }
+    }
+    
+    private void buscarHistorico() throws Exception
+    {
+        if ( tarea != null && tarea.getTareId() != null )
+        {
+            tarea.setHistorico( daoHistorico.find( tarea ));
         }
     }
     

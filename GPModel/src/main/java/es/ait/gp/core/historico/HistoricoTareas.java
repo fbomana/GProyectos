@@ -9,7 +9,6 @@ import es.ait.gp.core.tareas.Tareas;
 import es.ait.gp.core.usuarios.Usuarios;
 import java.io.Serializable;
 import java.util.Date;
-import javax.annotation.Generated;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,12 +44,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "HistoricoTareas.findByTareDescripcionNew", query = "SELECT h FROM HistoricoTareas h WHERE h.tareDescripcionNew = :tareDescripcionNew")
 })
 public class HistoricoTareas implements Serializable
-{
+{   
+    private static final long serialVersionUID = 1L;
     @TableGenerator(table = "GENERATOR_TABLE", pkColumnName = "tabla", 
             pkColumnValue = "historico_tareas", valueColumnName = "id", 
             name="HistoricoTareas.generator")
-    
-    private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "HistoricoTareas.generator")
@@ -98,6 +96,13 @@ public class HistoricoTareas implements Serializable
         this.hitrDescripcion = hitrDescripcion;
     }
 
+    public HistoricoTareas( Tareas tarea, Usuarios usuario )
+    {
+        this.tareDescripcionNew = tarea.getTareDescripcion();
+        this.tareNombreNew = tarea.getTareNombre();
+        this.tareId = tarea;
+        this.usuaIdAccion = usuario;
+    }
     public Integer getHitrId()
     {
         return hitrId;

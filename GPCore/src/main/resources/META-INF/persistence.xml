@@ -18,6 +18,7 @@
     <class>es.ait.gp.core.tareas.UsuariosTareas</class>
     <class>es.ait.gp.core.usuarios.Usuarios</class>
     <class>es.ait.gp.core.proyectos.EstadoProyectos</class>
+    <class>es.ait.gp.core.historico.HistoricoTareas</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

@@ -10,7 +10,6 @@ import es.ait.gp.core.historico.HistoricoTareas;
 import es.ait.gp.core.proyectos.Proyectos;
 import es.ait.gp.core.usuarios.Usuarios;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -48,7 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Tareas implements Serializable
 {   
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tareId")
-    private Collection<HistoricoTareas> historicoTareasCollection;
+    private List<HistoricoTareas> historico;
     private static final long serialVersionUID = 1L;
     
     @TableGenerator( name="Tareas.generador", table="GENERATOR_TABLE",
@@ -200,14 +199,14 @@ public class Tareas implements Serializable
     }
 
     @XmlTransient
-    public Collection<HistoricoTareas> getHistoricoTareasCollection()
+    public List<HistoricoTareas> getHistorico()
     {
-        return historicoTareasCollection;
+        return historico;
     }
 
-    public void setHistoricoTareasCollection(Collection<HistoricoTareas> historicoTareasCollection)
+    public void setHistorico(List<HistoricoTareas> historico)
     {
-        this.historicoTareasCollection = historicoTareasCollection;
+        this.historico = historico;
     }
     
 }
