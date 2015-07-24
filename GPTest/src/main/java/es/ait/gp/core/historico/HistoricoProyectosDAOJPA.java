@@ -26,6 +26,9 @@ public class HistoricoProyectosDAOJPA implements HistoricoProyectosDAO
     public void create(HistoricoProyectos historico)
     {
         em.persist( historico );
+        Proyectos proyecto = em.find( Proyectos.class, historico.getProyId().getProyId());
+        proyecto.getHistorico().add( historico );
+        em.merge( proyecto );
     }
 
     @Override

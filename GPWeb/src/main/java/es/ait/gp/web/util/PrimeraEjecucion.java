@@ -13,6 +13,9 @@ import es.ait.gp.core.permisos.Permisos;
 import es.ait.gp.core.permisos.PermisosDAO;
 import es.ait.gp.core.permisos.Roles;
 import es.ait.gp.core.permisos.RolesDAO;
+import es.ait.gp.core.relaciones.ConstantesRelaciones;
+import es.ait.gp.core.relaciones.Relaciones;
+import es.ait.gp.core.relaciones.RelacionesDAO;
 import es.ait.gp.core.usuarios.Usuarios;
 import es.ait.gp.core.usuarios.UsuariosDAO;
 import java.lang.reflect.Field;
@@ -45,6 +48,9 @@ public class PrimeraEjecucion
     
     @EJB
     AccionesHistoricoDAO accionesHistoricoDao;
+    
+    @EJB
+    RelacionesDAO relacionesDao;
     
     public void execute() throws Exception
     {
@@ -96,15 +102,33 @@ public class PrimeraEjecucion
 
             System.out.println("\tInsertando acciones de histórico");
             campos = ConstantesAccionesHistorico.class.getDeclaredFields();
-            ConstantesAccionesHistorico constantes = new ConstantesAccionesHistorico();
+            ConstantesAccionesHistorico constantesh = new ConstantesAccionesHistorico();
             for ( Field campo : campos )
             {
                 
                 try
                 {
-                    if ( accionesHistoricoDao.find( ((AccionesHistorico)campo.get( constantes )).getAchiId() ) == null )
+                    if ( accionesHistoricoDao.find( ((AccionesHistorico)campo.get( constantesh )).getAchiId() ) == null )
                     {
-                        accionesHistoricoDao.create(((AccionesHistorico)campo.get( constantes )) );
+                        accionesHistoricoDao.create(((AccionesHistorico)campo.get( constantesh )) );
+                    }
+                }
+                catch( Exception e )
+                {
+                    e.printStackTrace();
+                }
+            }
+            
+            System.out.println("\tInsertando relaciones de usuarios y tareas");
+            campos = ConstantesRelaciones.class.getDeclaredFields();
+            ConstantesRelaciones constantesp = new ConstantesRelaciones();
+            for ( Field campo : campos )
+            {
+                try
+                {
+                    if ( relacionesDao.find( ((Relaciones)campo.get( constantesp )).getRelaId()) == null )
+                    {
+                        relacionesDao.create(((Relaciones)campo.get( constantesp )) );
                     }
                 }
                 catch( Exception e )

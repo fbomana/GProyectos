@@ -113,7 +113,7 @@ public class UsuariosDAOJPA implements UsuariosDAO
     @Override
     public void changePassword(Usuarios usuario) throws Exception
     {
-        usuario.setUsuaPassword ( CodificarCadenas.codificar( usuario.getUsuaPassword(), usuario.getUsuaFxAlta().getTime() + ""));
+        usuario.setUsuaPassword ( CodificarCadenas.codificar( usuario.getUsuaPassword(), ( usuario.getUsuaFxAlta().getTime() / 1000 ) * 1000 + ""));
         edit( usuario );
     }
     
