@@ -8,6 +8,7 @@ package es.ait.gp.core.completo;
 import es.ait.gp.core.documentacion.DocumentacionDAO;
 import es.ait.gp.core.documentacion.TiposDocumentacion;
 import es.ait.gp.core.documentacion.TiposDocumentacionDAO;
+import es.ait.gp.core.documentacion.TiposDocumentacionDAOJPATest;
 import es.ait.gp.core.usuarios.UsuariosDAOJPATest;
 import javax.ejb.embeddable.EJBContainer;
 import org.junit.After;
@@ -90,10 +91,14 @@ public class BigTest
     @Test
     public void inicioTest() throws Exception
     {
-        UsuariosDAOJPATest testUsuarios = new UsuariosDAOJPATest(container);
+        UsuariosDAOJPATest testUsuarios = new UsuariosDAOJPATest( container );
+        TiposDocumentacionDAOJPATest testTiposDocumentacion = new TiposDocumentacionDAOJPATest( container );
+                
         
         testUsuarios.test();
+        testTiposDocumentacion.test();
         
+        testTiposDocumentacion.cleanUp();
         testUsuarios.cleanUp();
     }
 }
