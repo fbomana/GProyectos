@@ -2,3 +2,4 @@ target/
 GPEar/nb-configuration.xml
 *.bak
 .directory
+GPTest/src/main
