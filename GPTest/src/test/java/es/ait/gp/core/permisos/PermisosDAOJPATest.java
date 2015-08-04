@@ -7,11 +7,6 @@ package es.ait.gp.core.permisos;
 
 import java.util.List;
 import javax.ejb.embeddable.EJBContainer;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
@@ -20,18 +15,14 @@ import static org.junit.Assert.*;
  */
 public class PermisosDAOJPATest
 {
-    private static PermisosDAO instance;
-    private static EJBContainer container;
+    private PermisosDAO instance;
+    private EJBContainer container;
+    public Permisos permiso;
     
     
-    public PermisosDAOJPATest()
+    public PermisosDAOJPATest( EJBContainer container )
     {
-    }
-    
-    @BeforeClass
-    public static void setUpClass()
-    {
-        container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
+        this.container = container;
         try
         {
             instance = (PermisosDAO)container.getContext().lookup("java:global/classes/PermisosDAOJPA");
@@ -41,31 +32,15 @@ public class PermisosDAOJPATest
             e.printStackTrace();
         }
     }
-    
-    @AfterClass
-    public static void tearDownClass()
-    {
-        container.close();
-    }
-    
-    @Before
-    public void setUp()
-    {
-    }
-    
-    @After
-    public void tearDown()
-    {
-    }
+
 
     /**
      * Test of create method, of class PermisosDAOJPA.
      */
-    @Test
-    public void testCRUD() throws Exception
+    public void test() throws Exception
     {
         System.out.println("create");
-        Permisos permiso = new Permisos();
+        permiso = new Permisos();
         permiso.setPermNombre("TEST_JPATEST");
         permiso.setPermDescripcion("Permiso creado durante las pruebas de JPA");
         instance.create(permiso);
@@ -80,8 +55,10 @@ public class PermisosDAOJPATest
         System.out.println("findAll");
         List resultado = instance.findAll();
         assertFalse( resultado.isEmpty());
-
-        System.out.println("remove");
-        instance.remove(permiso);
-    }    
+    }
+    
+    public void cleanUp() throws Exception
+    {
+        instance.remove( permiso );
+    }
 }

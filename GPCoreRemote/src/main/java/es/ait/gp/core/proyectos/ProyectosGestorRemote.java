@@ -17,5 +17,5 @@ public interface ProyectosGestorRemote
 {
     public Proyectos nuevoProyecto( Proyectos proyecto, Usuarios usuario ) throws Exception;
     public void modificarProyecto( Proyectos proyecto, Usuarios usuario ) throws Exception;
-
+    public void borrarProyecto( Proyectos proyecto, Usuarios usuario ) throws Exception;
 }

@@ -7,11 +7,6 @@ package es.ait.gp.core.permisos;
 
 import java.util.List;
 import javax.ejb.embeddable.EJBContainer;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
@@ -22,16 +17,12 @@ public class RolesDAOJPATest
 {
     private static RolesDAO instance;
     private static EJBContainer container;
+    public Roles role;
     
     
-    public RolesDAOJPATest()
+    public RolesDAOJPATest( EJBContainer container )
     {
-    }
-    
-    @BeforeClass
-    public static void setUpClass()
-    {
-        container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
+        this.container = container;
         try
         {
             instance = (RolesDAO)container.getContext().lookup("java:global/classes/RolesDAOJPA");
@@ -41,31 +32,11 @@ public class RolesDAOJPATest
             e.printStackTrace();
         }
     }
-    
-    @AfterClass
-    public static void tearDownClass()
-    {
-        container.close();
-    }
-    
-    @Before
-    public void setUp()
-    {
-    }
-    
-    @After
-    public void tearDown()
-    {
-    }
-
-    /**
-     * Test of create method, of class RolesDAOJPA.
-     */
-    @Test
-    public void testCRUD() throws Exception
+   
+    public void test() throws Exception
     {
         System.out.println("create");
-        Roles role = new Roles();
+        role = new Roles();
         role.setRoleDescripcion("Role creado durante las pruebas de JPA");
         instance.create(role);
 
@@ -79,8 +50,11 @@ public class RolesDAOJPATest
         System.out.println("findAll");
         List resultado = instance.findAll();
         assertFalse( resultado.isEmpty());
-
+    }
+    
+    public void cleanUp() throws Exception
+    {
         System.out.println("remove");
-        instance.remove(role);
-    }    
+        instance.remove( role );
+    }
 }

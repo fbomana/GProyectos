@@ -81,7 +81,7 @@ public class RolesDAOJPA implements RolesDAO
     }
 
     @Override
-    public Roles findByName( String name) throws Exception
+    public Roles findByName( String name ) throws Exception
     {
         try
         {

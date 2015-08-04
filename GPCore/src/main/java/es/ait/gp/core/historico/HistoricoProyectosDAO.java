@@ -40,4 +40,12 @@ public interface HistoricoProyectosDAO
      * @return 
      */
     public List<HistoricoProyectos> find( Proyectos proyecto );
+    
+    /**
+     * Borra todas las entradas de historico de un proyecto.
+     * 
+     * @param proyecto
+     * @throws Exception 
+     */
+    public void remove( Proyectos proyecto ) throws Exception;
 }

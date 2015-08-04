@@ -42,5 +42,14 @@ public class HistoricoProyectosDAOJPA implements HistoricoProyectosDAO
     {
         return em.createQuery("select h from HistoricoProyectos h where h.proyId.proyId = :proyId order by h.hiprFxAccion desc, h.hiprId desc").setParameter("proyId", proyecto.getProyId()).getResultList();
     }
+
+    @Override
+    public void remove( Proyectos proyecto ) throws Exception
+    {
+        em.createQuery( "delete from HistoricoProyectos hp where hp.proyId.proyId = :proyId").setParameter( "proyId", proyecto.getProyId()).executeUpdate();
+        proyecto = em.find( Proyectos.class, proyecto.getProyId());
+        proyecto.getHistorico().clear();
+        em.merge( proyecto );        
+    }
     
 }

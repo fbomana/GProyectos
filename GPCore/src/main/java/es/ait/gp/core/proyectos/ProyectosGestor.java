@@ -8,7 +8,10 @@ package es.ait.gp.core.proyectos;
 import es.ait.gp.core.historico.ConstantesAccionesHistorico;
 import es.ait.gp.core.historico.HistoricoProyectos;
 import es.ait.gp.core.historico.HistoricoProyectosDAO;
+import es.ait.gp.core.permisos.Roles;
+import es.ait.gp.core.permisos.RolesDAO;
 import es.ait.gp.core.usuarios.Usuarios;
+import es.ait.gp.core.usuarios.UsuariosDAO;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -25,6 +28,12 @@ public class ProyectosGestor implements ProyectosGestorRemote
     
     @EJB
     private HistoricoProyectosDAO daoHistorico;
+    
+    @EJB
+    private UsuariosDAO daoUsuarios;
+    
+    @EJB
+    private RolesDAO daoRoles;
     
             
     @Override
@@ -64,6 +73,29 @@ public class ProyectosGestor implements ProyectosGestorRemote
         dao.edit( proyecto );
         historico.setProyId(proyecto);
         daoHistorico.create( historico );        
+    }
+
+    @Override
+    public void borrarProyecto( Proyectos proyecto, Usuarios usuario ) throws Exception
+    {
+        proyecto = dao.find(  proyecto.getProyId());
+        usuario = daoUsuarios.find( usuario.getUsuaId());
+        
+        Roles role = daoRoles.findByName( "Superadministrador" );
+        if ( proyecto == null || usuario == null )
+        {
+            throw new Exception("El proyecto o el usuario no existen");
+        }
+        
+        if ( !usuario.getRolesList().contains( role ) && !proyecto.getUsuaIdAlta().equals( usuario ))
+        {
+            throw new Exception("El usuario no puede eliminar el proyecto");
+        }
+        
+        //TO-DO:
+        //Hacer borrado recursivo de los elementos del proyecto ( tareas, documentacion, ... )
+        daoHistorico.remove( proyecto );
+        dao.remove( proyecto );
     }
     
 }

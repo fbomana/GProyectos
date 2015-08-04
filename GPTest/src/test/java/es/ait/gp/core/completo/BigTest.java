@@ -9,6 +9,9 @@ import es.ait.gp.core.documentacion.DocumentacionDAO;
 import es.ait.gp.core.documentacion.TiposDocumentacion;
 import es.ait.gp.core.documentacion.TiposDocumentacionDAO;
 import es.ait.gp.core.documentacion.TiposDocumentacionDAOJPATest;
+import es.ait.gp.core.permisos.PermisosDAOJPATest;
+import es.ait.gp.core.permisos.RolesDAOJPATest;
+import es.ait.gp.core.proyectos.ProyectosGestorTest;
 import es.ait.gp.core.usuarios.UsuariosDAOJPATest;
 import javax.ejb.embeddable.EJBContainer;
 import org.junit.After;
@@ -93,11 +96,22 @@ public class BigTest
     {
         UsuariosDAOJPATest testUsuarios = new UsuariosDAOJPATest( container );
         TiposDocumentacionDAOJPATest testTiposDocumentacion = new TiposDocumentacionDAOJPATest( container );
+        PermisosDAOJPATest testPermisos = new PermisosDAOJPATest( container );
+        RolesDAOJPATest testRoles = new RolesDAOJPATest( container );
+        ProyectosGestorTest testProyectos = new ProyectosGestorTest( container );
                 
         
         testUsuarios.test();
         testTiposDocumentacion.test();
+        testPermisos.test();
+        testRoles.test();
+        testProyectos.test( testUsuarios.usuario );
         
+        
+        
+        testProyectos.cleanUp( testUsuarios.usuario );
+        testRoles.cleanUp();
+        testPermisos.cleanUp();
         testTiposDocumentacion.cleanUp();
         testUsuarios.cleanUp();
     }
