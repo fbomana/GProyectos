@@ -5,15 +5,14 @@
  */
 package es.ait.gp.core.completo;
 
-import es.ait.gp.core.documentacion.DocumentacionDAO;
-import es.ait.gp.core.documentacion.TiposDocumentacion;
-import es.ait.gp.core.documentacion.TiposDocumentacionDAO;
+import es.ait.gp.core.documentacion.DocumentacionGestorTest;
 import es.ait.gp.core.documentacion.TiposDocumentacionDAOJPATest;
 import es.ait.gp.core.permisos.PermisosDAOJPATest;
 import es.ait.gp.core.permisos.RolesDAOJPATest;
 import es.ait.gp.core.proyectos.ProyectosGestorTest;
 import es.ait.gp.core.usuarios.UsuariosDAOJPATest;
 import javax.ejb.embeddable.EJBContainer;
+import javax.inject.Inject;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -35,6 +34,10 @@ import org.junit.Test;
 public class BigTest
 {
     private static EJBContainer container;
+    
+    @Inject
+    private es.ait.gp.core.util.PrimeraEjecucion primeraEjecucion;
+
     
     
     public BigTest()
@@ -94,11 +97,13 @@ public class BigTest
     @Test
     public void inicioTest() throws Exception
     {
+        primeraEjecucion.execute();
         UsuariosDAOJPATest testUsuarios = new UsuariosDAOJPATest( container );
         TiposDocumentacionDAOJPATest testTiposDocumentacion = new TiposDocumentacionDAOJPATest( container );
         PermisosDAOJPATest testPermisos = new PermisosDAOJPATest( container );
         RolesDAOJPATest testRoles = new RolesDAOJPATest( container );
         ProyectosGestorTest testProyectos = new ProyectosGestorTest( container );
+        DocumentacionGestorTest testDocumentacion = new DocumentacionGestorTest( container );
                 
         
         testUsuarios.test();
@@ -106,9 +111,9 @@ public class BigTest
         testPermisos.test();
         testRoles.test();
         testProyectos.test( testUsuarios.usuario );
+        testDocumentacion.testDocumentosProyecto(testProyectos.proyecto, testUsuarios.usuario );
         
-        
-        
+        testDocumentacion.cleanUpDocumentosProyecto(testProyectos.proyecto, testUsuarios.usuario );
         testProyectos.cleanUp( testUsuarios.usuario );
         testRoles.cleanUp();
         testPermisos.cleanUp();

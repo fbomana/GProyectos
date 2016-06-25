@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.ait.gp.web.util;
+package es.ait.gp.core.util;
 
 import javax.annotation.Resource;
 import java.sql.Connection;

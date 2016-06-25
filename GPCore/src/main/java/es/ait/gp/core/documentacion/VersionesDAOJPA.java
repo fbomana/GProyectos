@@ -21,7 +21,7 @@ public class VersionesDAOJPA implements VersionesDAO
     EntityManager em;
 
     @Override
-    public void create(Versiones version) throws Exception
+    public void create( Versiones version ) throws Exception
     {
         em.persist( version );
         
@@ -61,4 +61,10 @@ public class VersionesDAOJPA implements VersionesDAO
     {
         return em.createNamedQuery( "Versiones.findAll" ).getResultList();
     }    
+
+    @Override
+    public int remove(Documentacion documentacion) throws Exception
+    {
+        return em.createQuery("delete from Versiones v where v.docuId = :docuId").setParameter("docuId", documentacion.getDocuId()).executeUpdate();
+    }
 }

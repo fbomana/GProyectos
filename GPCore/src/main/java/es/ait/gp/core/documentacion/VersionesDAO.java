@@ -20,7 +20,9 @@ public interface VersionesDAO
 
     public void edit( Versiones version ) throws Exception;
 
-    public void remove( Versiones versiion ) throws Exception;
+    public void remove( Versiones version ) throws Exception;
+    
+    public int remove( Documentacion documentacion ) throws Exception;
     
     public Versiones find(Object id) throws Exception;
     
