@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+        <ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
+            <ui:define name="head.title">#{msgPermisos['roles.detalle.title']}</ui:define>
+            <ui:define name="content">
+                <h:outputStylesheet library="navegador/css" name="formulario.css"/>
+                <h:form>
+                    <h2><h:outputText value="JPA TEST"/></h2>
+                    <h:inputTextarea id="query" value="#{jpatest.jpqlQuery}" style="width:90%;height:20em;"/>
+                    <br/>
+                    <br/>
+                    <div class="botonera">
+                        <h:commandButton id="cancelar" value="Ejecutar Test" action="#{jpatest.test()}"/>
+                    </div>
+                </h:form>
+                <h:outputText value="#{jpatest.result.excepcion.message}" rendered="#{jpatest.result.excepcion != null }"/>
+                <table border="1">
+                    <thead>
+                        <tr>
+                        <c:forEach var="metodo" items="#{jpatest.result.metodos}">
+                            <th>#{metodo.name}</th>
+                        </c:forEach>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="resultado" items="#{jpatest.result.listadoExpandido}">
+                            <tr>
+                                <c:forEach var="metodo" items="#{jpatest.result.metodos}">
+                                    <td>#{resultado.get( metodo.getName())}</td>
+                                </c:forEach>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html> 

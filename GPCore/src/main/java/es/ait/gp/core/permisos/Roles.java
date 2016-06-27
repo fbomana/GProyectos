@@ -140,7 +140,6 @@ public class Roles implements Serializable
     @Override
     public boolean equals(Object object)
     {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Roles))
         {
             return false;
@@ -157,5 +156,26 @@ public class Roles implements Serializable
     public String toString()
     {
         return "es.ait.gp.core.permisos.Roles[ roleId=" + roleId + " ]";
+    }
+    
+    public void quitarPermiso( Permisos permiso )
+    {
+        if ( permisosList.contains( permiso ) )
+        {
+            permiso.getRolesList().remove( this );
+            permisosList.remove( permiso );
+        }
+    }
+    
+    public void anadirPermiso( Permisos permiso )
+    {
+        if ( !permisosList.contains( permiso ))
+        {
+            permisosList.add( permiso );
+        }
+        if ( !permiso.getRolesList().contains( this ))
+        {
+            permiso.getRolesList().add( this );
+        }
     }
 }

@@ -26,4 +26,6 @@ public interface PermisosDAO
     Permisos findByName(String nombre) throws Exception;
 
     List<Permisos> findAll() throws Exception;
+    
+    List<Permisos> findInRole( Roles role, boolean in );
 }

@@ -10,7 +10,7 @@
             <ui:define name="content">
                 <h:outputStylesheet library="navegador/css" name="listado.css"/>
                 <h2><h:outputText value="#{msgPermisos['roles.listado.title']}"/></h2>
-                <h:form>
+                <h:form id="form">
                     <h:dataTable var="rol" value="#{rolesList.roles}" rendered="#{rolesList.roles != null and !rolesList.roles.isEmpty()}">
                         <h:column>
                             <f:facet name="header"><h:outputText value="#{msgPermisos['roles.listado.rol']}"/></f:facet>

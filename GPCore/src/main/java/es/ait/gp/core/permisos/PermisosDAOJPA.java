@@ -70,4 +70,19 @@ public class PermisosDAOJPA implements PermisosDAO
         }
     }
     
+    /**
+     * Busca los permisos que están asociados a un role o que no están asociados a un rol en función del parámetro booleano in,
+     * 
+     * @param role
+     * @param in
+     * @return 
+     */
+    @Override
+    public List<Permisos> findInRole( Roles role, boolean in )
+    {
+       String query = "select p from Permisos p left join p.rolesList r where r.roleId " + ( in ? "=" : "<>" ) + ":roleId" ;
+       
+       return em.createQuery(query).setParameter("roleId", role.getRoleId()).getResultList();
+    }
+    
 }

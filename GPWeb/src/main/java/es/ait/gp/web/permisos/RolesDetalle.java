@@ -5,9 +5,12 @@
  */
 package es.ait.gp.web.permisos;
 
+import es.ait.gp.core.permisos.Permisos;
+import es.ait.gp.core.permisos.PermisosDAO;
 import es.ait.gp.core.permisos.Roles;
 import es.ait.gp.core.permisos.RolesDAO;
 import es.ait.gp.web.util.RequestUtils;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -25,7 +28,11 @@ public class RolesDetalle
     @EJB
     private RolesDAO dao;
     
+    @EJB
+    private PermisosDAO daoPermisos;
+    
     private Roles role;
+    private List<Permisos> permisos;
     
     @PostConstruct
     private void init()
@@ -33,6 +40,7 @@ public class RolesDetalle
         try
         {
             Integer roleId;
+            RequestUtils.pintarParametrosRequest();
             try
             {
                 roleId = new Integer( RequestUtils.getRequestParameter("roleId"));
@@ -43,12 +51,47 @@ public class RolesDetalle
             }
 
             role = dao.find( roleId );
+            permisos = daoPermisos.findInRole( role, false );
         }
         catch ( Exception e )
         {
         }
     }
 
+    public void anadir() throws Exception
+    {
+        String[] permisosAnadir = RequestUtils.getRequestParameterValues("form:permisosPosibles");
+        if ( permisosAnadir != null )
+        {
+            for ( String permId : permisosAnadir )
+            {
+                Permisos permiso = daoPermisos.find( new Integer( permId ));
+                role.anadirPermiso(permiso );
+                permisos.remove( permiso );
+            }
+        }
+    }
+    
+    public void quitar() throws Exception
+    {
+        String[] permisosQuitar = RequestUtils.getRequestParameterValues("form:permisos");
+        if ( permisosQuitar != null )
+        {
+            for ( String permId : permisosQuitar )
+            {
+                Permisos permiso = daoPermisos.find( new Integer( permId ));
+                role.quitarPermiso( permiso );
+                permisos.add( permiso );
+            }
+        }
+    }
+    
+    public String guardarCambios() throws Exception
+    {
+        dao.edit( role );
+        return cancelar();
+    }
+    
     /**
      * @return the role
      */
@@ -68,5 +111,21 @@ public class RolesDetalle
     public String cancelar()
     {
         return "/protegido/permisos/rolesLista.xhtml?faces-redirect=true";
+    }
+
+    /**
+     * @return the permisos
+     */
+    public List<Permisos> getPermisos()
+    {
+        return permisos;
+    }
+
+    /**
+     * @param permisos the permisos to set
+     */
+    public void setPermisos(List<Permisos> permisos)
+    {
+        this.permisos = permisos;
     }
 }
