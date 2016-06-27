@@ -6,6 +6,7 @@
 package es.ait.gp.core.relaciones;
 
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -14,7 +15,8 @@ import javax.persistence.PersistenceContext;
  * 
  * @author aitkiar
  */
-public abstract class RelacionesDAOJPA
+@Stateless
+public class RelacionesDAOJPA implements RelacionesDAO
 {
 
     @PersistenceContext(unitName = "GPCorePU")

@@ -7,15 +7,9 @@ package es.ait.gp.web.seguridad;
 
 import es.ait.gp.core.documentacion.TiposDocumentacionDAO;
 import es.ait.gp.core.documentacion.TiposDocumentacionMap;
-import es.ait.gp.core.permisos.ConstantesPermisos;
-import es.ait.gp.core.permisos.Permisos;
-import es.ait.gp.core.permisos.PermisosDAO;
-import es.ait.gp.core.permisos.RolesDAO;
 import es.ait.gp.core.proyectos.EstadoProyectosDAO;
 import es.ait.gp.core.proyectos.EstadoProyectosMap;
-import es.ait.gp.core.usuarios.UsuariosDAO;
 import es.ait.gp.core.util.PrimeraEjecucion;
-import java.lang.reflect.Field;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletContextEvent;

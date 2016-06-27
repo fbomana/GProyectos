@@ -41,7 +41,11 @@
         <base-name>es.ait.gp.web.properties.usuarios</base-name>
         <var>msgUsuarios</var>
     </resource-bundle>
-            
+
+    <resource-bundle>
+        <base-name>es.ait.gp.web.properties.permisos</base-name>
+        <var>msgPermisos</var>
+    </resource-bundle>            
     <locale-config>
         <default-locale>es</default-locale>
     </locale-config>                 

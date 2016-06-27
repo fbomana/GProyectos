@@ -1,5 +1,9 @@
 target/
-GPEar/nb-configuration.xml
 *.bak
 .directory
-GPTest/src/main
+GPEar/nb-configuration.xml
+GPEar/nbactions.xml
+GPCore/nb-configuration.xml
+GPCore/nbactions.xml
+GPWeb/nb-configuration.xml
+GPWeb/nbactions.xml

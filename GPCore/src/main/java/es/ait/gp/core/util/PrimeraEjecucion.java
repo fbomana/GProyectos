@@ -33,7 +33,7 @@ import javax.inject.Named;
  *
  * @author aitkiar
  */
-@Named("PrimeraEjecución")
+@Named("PrimeraEjecucion")
 @javax.enterprise.context.ApplicationScoped
 public class PrimeraEjecucion
 {
