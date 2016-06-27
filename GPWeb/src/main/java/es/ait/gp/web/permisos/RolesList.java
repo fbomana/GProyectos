@@ -53,4 +53,9 @@ public class RolesList
     {
         this.roles = roles;
     }
+    
+    public String editarRole( Integer roleId )
+    {
+        return "/protegido/permisos/rolesDetalle.xhtml?faces-redirect=true&roleId=" + roleId;   
+    }
 }

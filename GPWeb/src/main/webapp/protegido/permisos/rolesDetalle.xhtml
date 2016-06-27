@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
+            <ui:define name="head.title">#{msgPermisos['roles.detalle.title']}</ui:define>
+            <ui:define name="content">
+                <h:outputStylesheet library="navegador/css" name="formulario.css"/>
+                <h:form>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><h:outputText value="#{msgPermisos['roles.detalle.descripcion']}"/></td>
+                                <td><h:inputText id="descripcion" value="#{rolesDetalle.role.roleDescripcion}" readonly="true"/></td>
+                            </tr>
+                            <tr>
+                                <td><h:outputText value="#{msgPermisos['roles.detalle.permisos']}"/></td>
+                                <td>
+                                    <h:selectManyListbox id="permisos" readonly="true">
+                                        <f:selectItems value="#{rolesDetalle.role.permisosList}" var="permiso" itemValue="#{permiso.permId}" itemLabel="#{permiso.permNombre}"/>
+                                    </h:selectManyListbox>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <div class="botonera">
+                    <h:commandButton id="cancelar" value="#{msgPermisos['roles.detalle.cancelar']}" action="#{rolesDetalle.cancelar()}"/>
+                </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html> 

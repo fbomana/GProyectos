@@ -8,6 +8,9 @@
         <ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
             <ui:define name="head.title">#{msgPermisos['roles.listado.title']}</ui:define>
             <ui:define name="content">
+                <h:outputStylesheet library="navegador/css" name="listado.css"/>
+                <h2><h:outputText value="#{msgPermisos['roles.listado.title']}"/></h2>
+                <h:form>
                     <h:dataTable var="rol" value="#{rolesList.roles}" rendered="#{rolesList.roles != null and !rolesList.roles.isEmpty()}">
                         <h:column>
                             <f:facet name="header"><h:outputText value="#{msgPermisos['roles.listado.rol']}"/></f:facet>
@@ -15,9 +18,10 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header"><h:outputText value="#{msgPermisos['roles.listado.detalle']}"/></f:facet>
-                            <h:outputText value="..."/>
+                            <h:commandButton action="#{rolesList.editarRole( rol.roleId )}" value="#{msgPermisos['roles.listado.detalle.enlace']}"/>
                         </h:column>
                     </h:dataTable>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>
