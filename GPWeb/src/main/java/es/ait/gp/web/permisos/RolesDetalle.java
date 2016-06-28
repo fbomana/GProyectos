@@ -38,12 +38,44 @@ public class RolesDetalle
     private Roles role;
     private List<Permisos> permisos;
     
+    /**
+     * @return the role
+     */
+    public Roles getRole()
+    {
+        return role;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole(Roles role)
+    {
+        this.role = role;
+    }
+
+    /**
+     * @return the permisos
+     */
+    public List<Permisos> getPermisos()
+    {
+        return permisos;
+    }
+
+    /**
+     * @param permisos the permisos to set
+     */
+    public void setPermisos(List<Permisos> permisos)
+    {
+        this.permisos = permisos;
+    }
+    
     @PostConstruct
     private void init()
     {
         try
         {
-            Integer roleId;
+            Integer roleId = null;
             RequestUtils.pintarParametrosRequest();
             try
             {
@@ -51,7 +83,13 @@ public class RolesDetalle
             }
             catch ( Exception e )
             {
-                roleId = new Integer( RequestUtils.getRequestParameter("form:roleId"));
+                try
+                {
+                    roleId = new Integer( RequestUtils.getRequestParameter("form:roleId"));
+                }
+                catch ( Exception ex )
+                {
+                }
             }
             if ( roleId == null )
             {
@@ -72,39 +110,30 @@ public class RolesDetalle
     
     public String guardarCambios() throws Exception
     {
-        for ( Permisos permiso : permisos )
+        if ( role.getRoleId() != null )
         {
-            if ( !role.getPermisosList().contains( permiso ))
+            for ( Permisos permiso : permisos )
             {
-                permiso.getRolesList().remove( role );
+                if ( !role.getPermisosList().contains( permiso ))
+                {
+                    permiso.getRolesList().remove( role );
+                }
             }
-        }
-        
-        for ( Permisos permiso : role.getPermisosList())
-        {
-            if ( !permiso.getRolesList().contains( role ))
-            {
-                  permiso.getRolesList().add( role );
-            }
-        }
-        dao.edit( role );
-        return cancelar();
-    }
-    
-    /**
-     * @return the role
-     */
-    public Roles getRole()
-    {
-        return role;
-    }
 
-    /**
-     * @param role the role to set
-     */
-    public void setRole(Roles role)
-    {
-        this.role = role;
+            for ( Permisos permiso : role.getPermisosList())
+            {
+                if ( !permiso.getRolesList().contains( role ))
+                {
+                      permiso.getRolesList().add( role );
+                }
+            }
+            dao.edit( role );
+        }
+        else
+        {
+            dao.create( role );
+        }
+        return cancelar();
     }
     
     public String cancelar()
@@ -112,19 +141,4 @@ public class RolesDetalle
         return "/protegido/permisos/rolesLista.xhtml?faces-redirect=true";
     }
 
-    /**
-     * @return the permisos
-     */
-    public List<Permisos> getPermisos()
-    {
-        return permisos;
-    }
-
-    /**
-     * @param permisos the permisos to set
-     */
-    public void setPermisos(List<Permisos> permisos)
-    {
-        this.permisos = permisos;
-    }
 }

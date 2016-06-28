@@ -124,7 +124,14 @@ public class UsuariosDAOJPA implements UsuariosDAO
         String separador = " and ";
         if ( usuario != null )
         {
-            jql += " where u.usuaActivo = :activo";
+            if ( usuario.getRolesList() != null && !usuario.getRolesList().isEmpty())
+            {
+                jql += " left join u.rolesList r where r.roleId = :roleId and u.usuaActivo = :activo";
+            }
+            else
+            {
+                jql += " where u.usuaActivo = :activo";
+            }
             
             if ( usuario.getUsuaLogin() != null )
             {
@@ -146,6 +153,11 @@ public class UsuariosDAOJPA implements UsuariosDAO
         Query query = em.createQuery( jql );
         if ( usuario != null )
         {
+            if ( usuario.getRolesList() != null && !usuario.getRolesList().isEmpty())
+            {
+                query = query.setParameter("roleId",  usuario.getRolesList().get( 0 ).getRoleId());
+            }
+
             query = query.setParameter("activo", usuario.getUsuaActivo() ? "S" : "N");
             
             if ( usuario.getUsuaLogin() != null )

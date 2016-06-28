@@ -21,6 +21,9 @@
                             <h:commandButton action="#{rolesList.editarRole( rol.roleId )}" value="#{msgPermisos['roles.listado.detalle.enlace']}"/>
                         </h:column>
                     </h:dataTable>
+                    <div class="botonera">
+                        <h:commandButton id="nuevo" value="#{msgPermisos['roles.listado.nuevo']}" action="#{rolesList.nuevoRole()}"/>
+                    </div>
                 </h:form>
             </ui:define>
         </ui:composition>

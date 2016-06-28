@@ -6,9 +6,12 @@
 package es.ait.gp.web.usuarios;
 
 import es.ait.gp.core.criptografia.CodificarCadenas;
+import es.ait.gp.core.permisos.Roles;
+import es.ait.gp.core.permisos.RolesDAO;
 import es.ait.gp.core.usuarios.Usuarios;
 import es.ait.gp.core.usuarios.UsuariosDAO;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -28,9 +31,13 @@ public class UsuariosDetalleBean
     private Integer usuaId;
     private Boolean passwordCambiada;
     private String filtro;
+    private List<Roles> roles;
     
     @EJB
     private UsuariosDAO dao;
+    
+    @EJB
+    private RolesDAO rolesDao;
     
     public UsuariosDetalleBean()
     {
@@ -69,6 +76,7 @@ public class UsuariosDetalleBean
             }
             System.out.println( usuaId );
             usuario = dao.find( usuaId );
+            roles = rolesDao.findAll();
         }
         catch (Exception ex)
         {
@@ -109,6 +117,22 @@ public class UsuariosDetalleBean
     public void setUsuaId(Integer usuaId)
     {
         this.usuaId = usuaId;
+    }
+
+    /**
+     * @return the roles
+     */
+    public List<Roles> getRoles()
+    {
+        return roles;
+    }
+
+    /**
+     * @param roles the roles to set
+     */
+    public void setRoles(List<Roles> roles)
+    {
+        this.roles = roles;
     }
     
     /**

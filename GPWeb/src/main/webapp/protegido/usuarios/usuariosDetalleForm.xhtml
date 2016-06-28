@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <title>Gestor de Proyectos - usuarios</title>
 </h:head>
@@ -25,6 +26,10 @@
         <h:inputText id="usuaNombre" value="#{usuariosDetalleBean.usuario.usuaNombre}" required="yes"/>
         <h:outputLabel for="usuaEmail" value="Email" class="formulario"/>
         <h:inputText id="usuaEmail" value="#{usuariosDetalleBean.usuario.usuaEmail}" required="yes"/>
+        <h:outputLabel for="roles" value="#{msgUsuarios['formulario.rol']}" class="formulario"/>
+        <h:selectManyListbox id="roles" value="#{usuariosDetalleBean.usuario.rolesList}" converter="es.ait.gp.web.permisos.RolesConverter">
+            <f:selectItems value="#{usuariosDetalleBean.roles}" var="role" itemValue="#{role}" itemLabel="#{role.roleDescripcion}"/>
+        </h:selectManyListbox>
         <h:outputLabel for="usuaActivo" value="activo" class="formulario"/>
         <h:selectBooleanCheckbox id="usuaActivo" value="#{usuariosDetalleBean.usuario.usuaActivo}"/>
         <div class="botonera">

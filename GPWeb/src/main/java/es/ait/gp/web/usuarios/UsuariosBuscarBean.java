@@ -6,11 +6,15 @@
 package es.ait.gp.web.usuarios;
 
 
+import es.ait.gp.core.permisos.Roles;
+import es.ait.gp.core.permisos.RolesDAO;
 import es.ait.gp.core.usuarios.Usuarios;
 import es.ait.gp.core.usuarios.UsuariosDAO;
 import es.ait.gp.web.util.RequestUtils;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -34,11 +38,16 @@ public class UsuariosBuscarBean implements Serializable
     private int indiceListado = 0;
     private Integer indiceSeleccionado;
     private Usuarios filtro;
+    private Integer roleId;
+    private List<Roles> roles;
     
     private List<Usuarios> usuarios;
     
     @EJB
     UsuariosDAO dao;
+    
+    @EJB
+    RolesDAO rolesDao;
     
     public UsuariosBuscarBean()
     {
@@ -63,6 +72,10 @@ public class UsuariosBuscarBean implements Serializable
                 nombre = filtro.getUsuaNombre();
                 email = filtro.getUsuaEmail();
                 activo = filtro.getUsuaActivo();
+                if ( filtro.getRolesList() != null && !filtro.getRolesList().isEmpty())
+                {
+                    roleId = filtro.getRolesList().get(0).getRoleId();
+                }
 
                 buscar();
             }
@@ -71,6 +84,14 @@ public class UsuariosBuscarBean implements Serializable
                 System.out.println("Error al recuperar el filtro");
                 e.printStackTrace();
             }
+        }
+        try
+        {
+            roles = rolesDao.findAll();
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
         }
     }
 
@@ -174,6 +195,38 @@ public class UsuariosBuscarBean implements Serializable
     }
     
     /**
+     * @return the roleId
+     */
+    public Integer getRoleId()
+    {
+        return roleId;
+    }
+
+    /**
+     * @param roleId the roleId to set
+     */
+    public void setRoleId(Integer roleId)
+    {
+        this.roleId = roleId;
+    }
+
+    /**
+     * @return the roles
+     */
+    public List<Roles> getRoles()
+    {
+        return roles;
+    }
+
+    /**
+     * @param roles the roles to set
+     */
+    public void setRoles(List<Roles> roles)
+    {
+        this.roles = roles;
+    }
+    
+    /**
      * Método para ejecutar cuando se pulse el commandButton de limpiar. 
      * Devuelve el formulario a su estado original.
      * @return 
@@ -206,6 +259,18 @@ public class UsuariosBuscarBean implements Serializable
         filtro.setUsuaLogin( login == null || login.trim().equals("") ? null : login.trim());
         filtro.setUsuaNombre( nombre == null || nombre.trim().equals("") ? null : nombre.trim());
         filtro.setUsuaEmail( email == null || email.trim().equals("") ? null : email.trim());
+        filtro.setRolesList( new ArrayList<Roles>());
+        if ( roleId != null )
+        {
+            for ( Roles role : roles )
+            {
+                if ( Objects.equals(role.getRoleId(), roleId) )
+                {
+                    filtro.getRolesList().add( role );
+                    break;
+                }
+            }
+        }
         
         usuarios = dao.findByFilter( filtro );
         indiceListado = 0;

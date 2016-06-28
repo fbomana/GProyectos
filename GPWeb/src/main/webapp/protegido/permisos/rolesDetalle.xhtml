@@ -13,7 +13,7 @@
                 <h:form id="form">
                     <h:inputHidden id="roleId" value="#{rolesDetalle.role.roleId}"/>
                     <h:outputLabel class="formulario" value="#{msgPermisos['roles.detalle.descripcion']}"/>
-                    <h:inputText id="descripcion" value="#{rolesDetalle.role.roleDescripcion}" readonly="true"/>
+                    <h:inputText id="descripcion" value="#{rolesDetalle.role.roleDescripcion}"/>
                     <h:outputLabel class="formulario" value="#{msgPermisos['roles.detalle.permisos']}"/>
                     <div class="caja">
                         <t:selectManyCheckbox  id="permisos" layout="pageDirection" layoutWidth="3" value="#{rolesDetalle.role.permisosList}" converter="es.ait.gp.web.permisos.PermisosConverter">

@@ -58,4 +58,9 @@ public class RolesList
     {
         return "/protegido/permisos/rolesDetalle.xhtml?faces-redirect=true&roleId=" + roleId;   
     }
+    
+    public String nuevoRole()
+    {
+        return "/protegido/permisos/rolesDetalle.xhtml?faces-redirect=true";   
+    }
 }
