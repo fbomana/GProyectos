@@ -10,10 +10,14 @@ import es.ait.gp.core.permisos.PermisosDAO;
 import es.ait.gp.core.permisos.Roles;
 import es.ait.gp.core.permisos.RolesDAO;
 import es.ait.gp.web.util.RequestUtils;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
 import javax.inject.Named;
 
 /**
@@ -49,45 +53,40 @@ public class RolesDetalle
             {
                 roleId = new Integer( RequestUtils.getRequestParameter("form:roleId"));
             }
-
-            role = dao.find( roleId );
-            permisos = daoPermisos.findInRole( role, false );
+            if ( roleId == null )
+            {
+                role = new Roles();
+                role.setPermisosList( new ArrayList<Permisos>());
+            }
+            else
+            {
+                role = dao.find( roleId );
+            }
+                            
+            permisos = daoPermisos.findAll();
         }
         catch ( Exception e )
         {
         }
     }
-
-    public void anadir() throws Exception
-    {
-        String[] permisosAnadir = RequestUtils.getRequestParameterValues("form:permisosPosibles");
-        if ( permisosAnadir != null )
-        {
-            for ( String permId : permisosAnadir )
-            {
-                Permisos permiso = daoPermisos.find( new Integer( permId ));
-                role.anadirPermiso(permiso );
-                permisos.remove( permiso );
-            }
-        }
-    }
-    
-    public void quitar() throws Exception
-    {
-        String[] permisosQuitar = RequestUtils.getRequestParameterValues("form:permisos");
-        if ( permisosQuitar != null )
-        {
-            for ( String permId : permisosQuitar )
-            {
-                Permisos permiso = daoPermisos.find( new Integer( permId ));
-                role.quitarPermiso( permiso );
-                permisos.add( permiso );
-            }
-        }
-    }
     
     public String guardarCambios() throws Exception
     {
+        for ( Permisos permiso : permisos )
+        {
+            if ( !role.getPermisosList().contains( permiso ))
+            {
+                permiso.getRolesList().remove( role );
+            }
+        }
+        
+        for ( Permisos permiso : role.getPermisosList())
+        {
+            if ( !permiso.getRolesList().contains( role ))
+            {
+                  permiso.getRolesList().add( role );
+            }
+        }
         dao.edit( role );
         return cancelar();
     }

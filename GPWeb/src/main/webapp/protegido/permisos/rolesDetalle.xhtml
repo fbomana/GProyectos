@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
     <h:body>
         <ui:composition template="/resources/navegador/plantillaGeneral.xhtml">
             <ui:define name="head.title">#{msgPermisos['roles.detalle.title']}</ui:define>
@@ -11,34 +12,14 @@
                 <h:outputStylesheet library="navegador/css" name="formulario.css"/>
                 <h:form id="form">
                     <h:inputHidden id="roleId" value="#{rolesDetalle.role.roleId}"/>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><h:outputText value="#{msgPermisos['roles.detalle.descripcion']}"/></td>
-                                <td><h:inputText id="descripcion" value="#{rolesDetalle.role.roleDescripcion}" readonly="true"/></td>
-                            </tr>
-                            <tr>
-                                <td><h:outputText value="#{msgPermisos['roles.detalle.permisos']}"/></td>
-                                <td>
-                                    <div style="float:left;width:40%;margin-right: 1em;">
-                                    <h:selectManyListbox id="permisos" readonly="true">
-                                        <f:selectItems value="#{rolesDetalle.role.permisosList}" var="permiso" itemValue="#{permiso.permId}" itemLabel="#{permiso.permNombre}"/>
-                                    </h:selectManyListbox>
-                                    </div>
-                                    <div style="float:left;margin-right: 1em;">
-                                    <br/>
-                                    <h:commandButton id="anadir" value="&lt;&lt;" action="#{rolesDetalle.anadir()}"/><br/><br/>
-                                    <h:commandButton id="quitar" value="&gt;&gt;" action="#{rolesDetalle.quitar()}"/>
-                                    </div>
-                                    <div style="float:left;width:40%">
-                                    <h:selectManyListbox id="permisosPosibles" readonly="true">
-                                        <f:selectItems value="#{rolesDetalle.permisos}" var="permiso" itemValue="#{permiso.permId}" itemLabel="#{permiso.permNombre}"/>
-                                    </h:selectManyListbox>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h:outputLabel class="formulario" value="#{msgPermisos['roles.detalle.descripcion']}"/>
+                    <h:inputText id="descripcion" value="#{rolesDetalle.role.roleDescripcion}" readonly="true"/>
+                    <h:outputLabel class="formulario" value="#{msgPermisos['roles.detalle.permisos']}"/>
+                    <div class="caja">
+                        <t:selectManyCheckbox  id="permisos" layout="pageDirection" layoutWidth="3" value="#{rolesDetalle.role.permisosList}" converter="es.ait.gp.web.permisos.PermisosConverter">
+                            <f:selectItems value="#{rolesDetalle.permisos}" var="permiso" itemValue="#{permiso}" itemLabel="#{permiso.permNombre}"/>
+                        </t:selectManyCheckbox>
+                    </div>
                 <div class="botonera">
                     <h:commandButton id="guardar" value="#{msgPermisos['roles.detalle.cancelar']}" action="#{rolesDetalle.cancelar()}"/>
                     <h:commandButton id="cancelar" value="#{msgPermisos['roles.detalle.guardar']}" action="#{rolesDetalle.guardarCambios()}"/>

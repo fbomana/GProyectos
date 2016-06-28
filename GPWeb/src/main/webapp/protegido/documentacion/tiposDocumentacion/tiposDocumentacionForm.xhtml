@@ -10,29 +10,19 @@
             <h:outputStylesheet library="navegador/css" name="formulario.css"/>
             <h:form id="form" enctype="multipart/form-data">
                 <h:inputHidden id="tdocId" value="#{tiposDocumentacionBean.tipo.tdocId}"/>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td><h:outputText value="#{msgDocumentacion['tiposDocumentacion.detalle.nombre']}"/></td>
-                            <td><h:inputText id="tdocNombre" value="#{tiposDocumentacionBean.tipo.tdocNombre}"/></td>
-                        </tr>
-                        <tr>
-                            <td><h:outputText value="#{msgDocumentacion['tiposDocumentacion.detalle.descripcion']}"/></td>
-                            <td><h:inputTextarea id="tdocDescripcion" value="#{tiposDocumentacionBean.tipo.tdocDescripcion}"/></td>
-                        </tr>
-                        <tr>
-                            <td><h:outputText value="#{msgDocumentacion['tiposDocumentacion.detalle.plantilla']}"/></td>
-                            <td>
+                <h:outputLabel class="formulario" value="#{msgDocumentacion['tiposDocumentacion.detalle.nombre']}"/>
+                <h:inputText id="tdocNombre" value="#{tiposDocumentacionBean.tipo.tdocNombre}"/>
+                <h:outputLabel class="formulario" value="#{msgDocumentacion['tiposDocumentacion.detalle.descripcion']}"/>
+                <h:inputTextarea id="tdocDescripcion" value="#{tiposDocumentacionBean.tipo.tdocDescripcion}"/>
+                <h:outputLabel class="formulario" value="#{msgDocumentacion['tiposDocumentacion.detalle.plantilla']}"/>
+                <div class="caja">
                                 <h:inputFile id="tdocPlantilla" value="#{tiposDocumentacionBean.part}"/>
                                 <h:inputText id="tdocPlantillaNombre" value="#{tiposDocumentacionBean.tipo.tdocPlantillaNombre}" readonly="true"/>
                                 <h:inputText id="tdocPlantillaMime" value="#{tiposDocumentacionBean.tipo.tdocPlantillaMime}" readonly="true"/>
                                 <h:commandButton id="descargarPlantilla" value="Descargar plantilla"
                                     action="#{tiposDocumentacionBean.descargarPlantilla()}"
                                     rendered="#{tiposDocumentacionBean.tipo.tdocPlantilla != null }"/>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                </div>
                 <div class="botonera">
                     <h:commandButton id="cancelar" value="#{msgDocumentacion['tiposDocumentacion.detalle.boton.cancelar']}" action="#{tiposDocumentacionBean.cancelar()}"/>
                     <h:commandButton id="doGuardar" value="#{msgDocumentacion['tiposDocumentacion.detalle.boton.guardar']}" action="#{tiposDocumentacionBean.guardar()}"/>

@@ -7,41 +7,47 @@ and open the template in the editor.
     Created on : 22-ene-2015, 17:53:28
     Author     : aitkiar
 */
-
-table {
-    width:95%;
-    margin:auto;
-}
-
-table tr td:first-child {
+label.formulario {
+    display:inline-block;
     width:15%;
     font-weight: bold;
     padding:0.5em;
+    margin-left: 0.5em;
     border-bottom: dotted 1px black;
 }
 
-table tr td:nth-child {
-    width: 85%;
-    padding:0.5em;
+div.caja {
+    display:inline-block;
+    width:80%;
+    float:right;
+    overflow:auto;
 }
 
-table tr td input[type="text"] {
-    width:100%;
+input[type="text"] {
+    width:80%;
 }
 
-table tr td input[type="password"] {
-    width:100%;
+input[type="password"] {
+    width:80%;
 }
 
-table tr td textarea {
-    width:100%;
+textarea {
+    width:80%;
 }
 
-table tr td select {
-    width:100%;
+select {
+    width:80%;
 }
 
-table tr td input[type="submit"] {
+input[type="submit"] {
     width:10em;
     margin-right:2em;
+}
+
+div.botonera {
+    clear:both;
+    width:95%;
+    margin:auto;
+    text-align: right;
+    padding-top:1em;
 }

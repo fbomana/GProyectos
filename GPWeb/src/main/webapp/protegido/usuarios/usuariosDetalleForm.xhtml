@@ -15,47 +15,22 @@
     <h:form id="form">
         <h:inputHidden id="usuaId" value="#{usuariosDetalleBean.usuaId}"/>
         <h:inputHidden id="filtro" value="#{usuariosDetalleBean.filtro}"/>
-        <table>
-            <tbody>
-                <tr>
-                    <td><h:outputLabel for="novale" value="id"/></td>
-                    <td><h:inputText id="novale" value="#{usuariosDetalleBean.usuario.usuaId}" readonly="true"/></td>
-                </tr>
-                
-                <tr>
-                    <td><h:outputLabel for="usuaLogin" value="Login"/></td>
-                    <td><h:inputText id="usuaLogin" value="#{usuariosDetalleBean.usuario.usuaLogin}" required="yes"/></td>
-                </tr>
-
-                <tr>
-                    <td><h:outputLabel for="usuaPassword" value="Password"/></td>
-                    <td><h:inputSecret id="usuaPassword" value="#{usuariosDetalleBean.usuario.usuaPassword}" redisplay="true" required="yes" valueChangeListener="#{usuariosDetalleBean.passwordCambiada}"/></td>
-                </tr>
-                
-                <tr>
-                    <td><h:outputLabel for="usuaNombre" value="Nombre"/></td>
-                    <td><h:inputText id="usuaNombre" value="#{usuariosDetalleBean.usuario.usuaNombre}" required="yes"/></td>
-                </tr>
-
-                <tr>
-                    <td><h:outputLabel for="usuaEmail" value="Email"/></td>
-                    <td><h:inputText id="usuaEmail" value="#{usuariosDetalleBean.usuario.usuaEmail}" required="yes"/></td>
-                </tr>
-
-                <tr>
-                    <td><h:outputLabel for="usuaActivo" value="activo"/></td>
-                    <td><h:selectBooleanCheckbox id="usuaActivo" value="#{usuariosDetalleBean.usuario.usuaActivo}"/></td>
-                </tr>
-
-                <tr>
-                    <td colspan="2">
-                        <h:commandButton id="buscar" value="Guardar" label="Guardar" action="#{usuariosDetalleBean.guardar()}"/>
-                        <h:commandButton id="cancelar" value="Cancelar" label="Cancelar" action="#{usuariosDetalleBean.cancelar()}" immediate="true"/>
-                    </td>
-                </tr>
-            
-            </tbody>
-        </table>
+        <h:outputLabel for="novale" value="id" class="formulario"/>
+        <h:inputText id="novale" value="#{usuariosDetalleBean.usuario.usuaId}" readonly="true"/>
+        <h:outputLabel for="usuaLogin" value="Login" class="formulario"/>
+        <h:inputText id="usuaLogin" value="#{usuariosDetalleBean.usuario.usuaLogin}" required="yes"/>
+        <h:outputLabel for="usuaPassword" value="Password" class="formulario"/>
+        <h:inputSecret id="usuaPassword" value="#{usuariosDetalleBean.usuario.usuaPassword}" redisplay="true" required="yes" valueChangeListener="#{usuariosDetalleBean.passwordCambiada}"/>
+        <h:outputLabel for="usuaNombre" value="Nombre" class="formulario"/>
+        <h:inputText id="usuaNombre" value="#{usuariosDetalleBean.usuario.usuaNombre}" required="yes"/>
+        <h:outputLabel for="usuaEmail" value="Email" class="formulario"/>
+        <h:inputText id="usuaEmail" value="#{usuariosDetalleBean.usuario.usuaEmail}" required="yes"/>
+        <h:outputLabel for="usuaActivo" value="activo" class="formulario"/>
+        <h:selectBooleanCheckbox id="usuaActivo" value="#{usuariosDetalleBean.usuario.usuaActivo}"/>
+        <div class="botonera">
+            <h:commandButton id="buscar" value="Guardar" label="Guardar" action="#{usuariosDetalleBean.guardar()}"/>
+            <h:commandButton id="cancelar" value="Cancelar" label="Cancelar" action="#{usuariosDetalleBean.cancelar()}" immediate="true"/>
+        </div>
     </h:form>
 </ui:define>
 </ui:composition>
