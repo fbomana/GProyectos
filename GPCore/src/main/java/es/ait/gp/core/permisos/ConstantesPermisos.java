@@ -23,4 +23,11 @@ public class ConstantesPermisos
     public final String TAREAS_CONSULTAR = "TAREAS_CONSULTAR";
     public final String TAREAS_EDITAR = "TAREAS_EDITAR";
     public final String TAREAS_BORRAR = "TAREAS_BORRAR";
+    
+    // Permisos
+    public final String PERMISOS = "PERMISOS";
+            
+    // Usuarios
+    public final String USUARIOS_GESTION = "USUARIOS_GESTION";
+    public final String USUARIOS_CONSULTA = "USUARIOS_CONSULTA";
 }

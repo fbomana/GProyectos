@@ -13,12 +13,16 @@ import es.ait.gp.web.util.RequestUtils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Named;
+import javax.transaction.UserTransaction;
 
 /**
  * Backing bean para la página de detalle de roles.
@@ -27,8 +31,12 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
+@TransactionManagement(value=TransactionManagementType.BEAN)
 public class RolesDetalle
 {
+    @Resource
+    private UserTransaction userTransaction;
+    
     @EJB
     private RolesDAO dao;
     
@@ -110,28 +118,42 @@ public class RolesDetalle
     
     public String guardarCambios() throws Exception
     {
-        if ( role.getRoleId() != null )
+        try
         {
-            for ( Permisos permiso : permisos )
+            userTransaction.begin();
+            if ( role.getRoleId() != null )
             {
-                if ( !role.getPermisosList().contains( permiso ))
+                for ( Permisos permiso : permisos )
                 {
-                    permiso.getRolesList().remove( role );
+                    if ( !role.getPermisosList().contains( permiso ))
+                    {
+                        permiso.getRolesList().remove( role );
+                        daoPermisos.edit( permiso );
+                    }
                 }
-            }
 
-            for ( Permisos permiso : role.getPermisosList())
-            {
-                if ( !permiso.getRolesList().contains( role ))
+                for ( Permisos permiso : role.getPermisosList())
                 {
-                      permiso.getRolesList().add( role );
+                    if ( !permiso.getRolesList().contains( role ))
+                    {
+                        permiso.getRolesList().add( role );
+                        daoPermisos.edit( permiso );
+                    }
                 }
+                dao.edit( role );
+
             }
-            dao.edit( role );
+            else
+            {
+                dao.create( role );
+            }
+            userTransaction.commit();
+               
         }
-        else
+        catch ( Exception e )
         {
-            dao.create( role );
+            userTransaction.rollback();
+            throw e;
         }
         return cancelar();
     }

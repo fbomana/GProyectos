@@ -18,11 +18,11 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header"><h:outputText value="#{msgPermisos['roles.listado.detalle']}"/></f:facet>
-                            <h:commandButton action="#{rolesList.editarRole( rol.roleId )}" value="#{msgPermisos['roles.listado.detalle.enlace']}"/>
+                            <h:commandButton action="#{rolesList.editarRole( rol.roleId )}" value="#{msgPermisos['roles.listado.detalle.enlace']}" disabled="#{!sessionScope.usuario.tienePermiso('PERMISOS')}"/>
                         </h:column>
                     </h:dataTable>
                     <div class="botonera">
-                        <h:commandButton id="nuevo" value="#{msgPermisos['roles.listado.nuevo']}" action="#{rolesList.nuevoRole()}"/>
+                        <h:commandButton id="nuevo" value="#{msgPermisos['roles.listado.nuevo']}" action="#{rolesList.nuevoRole()}" disabled="#{!sessionScope.usuario.tienePermiso('PERMISOS')}"/>
                     </div>
                 </h:form>
             </ui:define>

@@ -33,7 +33,7 @@
         <h:outputLabel for="usuaActivo" value="activo" class="formulario"/>
         <h:selectBooleanCheckbox id="usuaActivo" value="#{usuariosDetalleBean.usuario.usuaActivo}"/>
         <div class="botonera">
-            <h:commandButton id="buscar" value="Guardar" label="Guardar" action="#{usuariosDetalleBean.guardar()}"/>
+            <h:commandButton id="buscar" value="Guardar" label="Guardar" action="#{usuariosDetalleBean.guardar()}" disabled="#{!sessionScope.usuario.tienePermiso( 'USUARIOS_GESTION' )}"/>
             <h:commandButton id="cancelar" value="Cancelar" label="Cancelar" action="#{usuariosDetalleBean.cancelar()}" immediate="true"/>
         </div>
     </h:form>

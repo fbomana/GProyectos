@@ -24,7 +24,7 @@
         <h:outputLabel for="activo" value="#{msgUsuarios['formulario.activo']}" class="formulario"/>
         <h:selectBooleanCheckbox id="activo" value="#{usuariosBuscarBean.activo}"/>
         <div class="botonera">
-            <h:commandButton id="buscar" value="#{msgUsuarios['formulario.boton.buscar']}" label="Buscar" action="#{usuariosBuscarBean.buscar()}"/>
+            <h:commandButton id="buscar" value="#{msgUsuarios['formulario.boton.buscar']}" label="Buscar" action="#{usuariosBuscarBean.buscar()}" disabled="#{!sessionScope.usuario.tienePermiso( 'USUARIOS_GESTION' ) and !sessionScope.usuario.tienePermiso( 'USUARIOS_CONSULTA' )}"/>
             <h:commandButton id="limpiar" value="#{msgUsuarios['formulario.boton.limpiar']}" label="Limpiar" action="#{usuariosBuscarBean.limpiar()}"/>
         </div>
     </h:form>

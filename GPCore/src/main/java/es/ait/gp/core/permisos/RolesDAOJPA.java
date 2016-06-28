@@ -65,6 +65,7 @@ public class RolesDAOJPA implements RolesDAO
                 }
             }
         }
+        em.flush();
     }
 
     @Override

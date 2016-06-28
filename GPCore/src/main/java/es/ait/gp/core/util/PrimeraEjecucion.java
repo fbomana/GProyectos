@@ -80,28 +80,10 @@ public class PrimeraEjecucion
             ejecutor.executeUpadate("insert into estado_proyectos values ( 'CERRADO', 'El proyecto y todas sus tareas asociadas han concluido.' )");
 
             
-            System.out.println("\tInsertando en permisos");
-            Field[] campos = ConstantesPermisos.class.getDeclaredFields();
-            for ( Field campo : campos )
-            {
-                Permisos permiso = new Permisos();
-                permiso.setPermNombre( campo.getName() );
-                permiso.setPermDescripcion(campo.getName());
-                try
-                {
-                    if ( permisosDao.findByName( campo.getName() ) == null  )
-                    {
-                        permisosDao.create( permiso );
-                    }                            
-                }
-                catch( Exception e )
-                {
-                    e.printStackTrace();
-                }
-            }
+            updatePermisos();
 
             System.out.println("\tInsertando acciones de histórico");
-            campos = ConstantesAccionesHistorico.class.getDeclaredFields();
+            Field[] campos = ConstantesAccionesHistorico.class.getDeclaredFields();
             ConstantesAccionesHistorico constantesh = new ConstantesAccionesHistorico();
             for ( Field campo : campos )
             {
@@ -180,8 +162,32 @@ public class PrimeraEjecucion
         }
         else
         {
-           System.out.println("Usuario Adminisatrador encontrado en BBDD. No se hace nada.");
+           System.out.println("Usuario Adminisatrador encontrado en BBDD.");
+           updatePermisos();
         }
         
+    }
+    
+    private void updatePermisos()
+    {
+        System.out.println("\tInsertando en permisos");
+        Field[] campos = ConstantesPermisos.class.getDeclaredFields();
+        for ( Field campo : campos )
+        {
+            Permisos permiso = new Permisos();
+            permiso.setPermNombre( campo.getName() );
+            permiso.setPermDescripcion(campo.getName());
+            try
+            {
+                if ( permisosDao.findByName( campo.getName() ) == null  )
+                {
+                    permisosDao.create( permiso );
+                }                            
+            }
+            catch( Exception e )
+            {
+                e.printStackTrace();
+            }
+        }
     }
 }

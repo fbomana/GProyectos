@@ -62,7 +62,7 @@
             </div>
         </h:panelGroup>
         <div class="botonera">        
-            <h:commandButton value="Nuevo Usuario" action="usuariosDetalleForm"/>
+            <h:commandButton value="Nuevo Usuario" action="usuariosDetalleForm" disabled="#{!sessionScope.usuario.tienePermiso( 'USUARIOS_GESTION' )}"/>
             <h:commandButton value="Volver" action="usuariosBuscarForm" immediate="true"/>
         </div>
     </h:form>
